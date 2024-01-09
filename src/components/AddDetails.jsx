@@ -51,7 +51,7 @@ export default function AddDetails() {
         let userAfterPost = await postUserDetails(user, setLoad, setworngRequest);
         console.log(userAfterPost);
         if (userAfterPost.code == 200) {
-            localStorage.setItem("currentUser", JSON.stringify(userAfterPost.params ));
+            localStorage.setItem("currentUser", JSON.stringify(userAfterPost.params.username ));
             navigate(`/users/${userAfterPost.params.id}/home`);
         }
     }
