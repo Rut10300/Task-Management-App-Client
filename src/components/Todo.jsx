@@ -7,7 +7,6 @@ export default function Todo({ task, setTodos, deleteFromTodos,setLoad }) {
     let details = task.title;
     const [title, setTitle] = useState(details);
       function Changechecked(e) {
-        e.preventDefault();
         task.completed = !task.completed;
         let afterPutTodo =   putInformetion(task.id, task,setLoad,"todos");
         if (afterPutTodo)
@@ -41,7 +40,6 @@ export default function Todo({ task, setTodos, deleteFromTodos,setLoad }) {
                     e.preventDefault();
                     setTitle(e.target.value)
                 }} />}
-
                 <input type="checkbox" checked={task.completed} value="completed" onChange={(e) => Changechecked(e)} />
                 {!upDate ? <button onClick={(e) => {
                     setUpDate(true); e.preventDefault();
