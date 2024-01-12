@@ -6,22 +6,32 @@ export default function Register() {
   const [load, setLoad] = useState(false);
   const [worngRequest, setworngRequest] = useState(false);
   const navigate = useNavigate();
-  async function register(userName, password, verifyPassword) {
-    if (password != verifyPassword) {
+
+  const [details, setDetails] = useState({ userName: '', password: '', verifyPassword: '' });
+  const handleInputChange = (e) => {
+    console.log("");
+    const { name, value } = e.target
+    setDetails({
+      ...details,
+      [name]: value
+    })
+    e.target.classList.remove("notTouch");
+  }
+
+  async function register() {
+    console.log("hi");
+    if (details.password != details.verifyPassword) {
       alert("Passwords don't match");
     }
     else {
-      let userDetails = await getUserDetails(userName, setLoad, setworngRequest);
+      let userDetails = await getUserDetails(details.userName, setLoad, setworngRequest);
       if (userDetails.code != 100) {
         if (userDetails.code == 300) {
           let newUserDetails = {
-            username: userName,
-            website: password
+            username: details.userName,
+            website: details.password
           };
-         // let newUserDetails = await postUserDetails(userName, password, setLoad, setworngRequest);
-         // localStorage.setItem("currentUser", JSON.stringify({ userDetails: userDetails }));
-         // navigate(`/users/${newUserDetails.id}/addDetails`);
-           navigate(`/register/addDetails` ,{state:{userDetails:newUserDetails}});
+          navigate(`/register/addDetails`, { state: { userDetails: newUserDetails } });
         }
         else
           alert("wrong username or password");
@@ -34,20 +44,17 @@ export default function Register() {
       {!worngRequest ? <div>{(!load) ?
         <div>
           <h2>Register: </h2>
-          <form>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            register();
+          }}>
             <label htmlFor="userName">User Name</label><br />
-            <input id="userName" type='text' name='username' required /><br />
+            <input id="userName" type='text' name='userName' required onChange={(e) => handleInputChange(e)} /><br />
             <label htmlFor="password">Password</label><br />
-            <input id="password" type='password' name='password' autoComplete='2' required /><br />
+            <input id="password" type='password' name='password' autoComplete='2' required onChange={(e) => handleInputChange(e)} /><br />
             <label htmlFor="password">Verify Password</label><br />
-            <input id="verifyPassword" type='password' name='password' autoComplete='2' required /><br /><br />
-            <button onClick={() => {
-              register(userName.value, password.value, verifyPassword.value);
-              userName.value = "";
-              password.value = "";
-              verifyPassword.value = "";
-            }}
-              style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}
+            <input id="verifyPassword" type='password' name='verifyPassword' autoComplete='2' required onChange={(e) => handleInputChange(e)} /><br /><br />
+            <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}
             >Register</button>
           </form>
           <Link to="/login">Log in</Link>

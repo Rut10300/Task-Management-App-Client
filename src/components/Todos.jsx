@@ -1,74 +1,79 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, NavLink, Link, useParams, useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import Todo from './Todo';
-import {  postInformetion,getMoreInformetionAbouteUser } from '../JS/request';
+import { postInformetion, getMoreInformetionAbouteUser } from '../JS/request';
 
 let sortOrFilterFlag = "sort";
 
 let todos = [];
 export default function Todos() {
   const navigate = useNavigate();
-  const [searchParam, setSearchParam] = useSearchParams();
-  let typeSort = searchParam.get("sort");
-  // let typeFilter=searchParam.get("filter");
+  const [searchParamLink, setsearchParamLink] = useSearchParams();
+  let typeSort = searchParamLink.get("sort");
   const [completed, setCompleted] = useState(false);
   const [load, setLoad] = useState(true);
-  const [foundTask, setFoundTask] = useState(false);
+  const [foundTodoFlag, setFoundTodoFlag] = useState(false);
   const [wrongRequest, setWrongRequest] = useState(false);
   const { id } = useParams();
-  const [searchTodo, setSearchTodo] = useState(false);
-  // const [todos, setTodos] = useState({  });
-  // const [sortSelected, setSortSelected] = useState(location.state.sort ?? "serial");
-  const [addTask, setAddTask] = useState(false);
+  const [searchTodoFlag, setsearchTodoFlag] = useState(false);
+  const [addTodoFlag, setaddTodoFlag] = useState(false);
   const [showTodos, setShowTodos] = useState([{}, {}]);
   let optionSort = {
-    alphabetic:() => todos.sort((a, b) => a.title.localeCompare(b.title)),
+    alphabetic: () => todos.sort((a, b) => a.title.localeCompare(b.title)),
     serial: () => todos.sort((a, b) => a.id - b.id),
-    random: () => todos.sort((a, b) => a.title - b.title),
+    random: () => { todos.sort((a, b) => { let rnd = Math.random(0.0, 1.1); rnd > 0.5 ? 1 : -1 }) },
     completed: () => todos.sort((a, b) => a.completed - b.completed)
   };
   useEffect(() => {
-    typeSort = searchParam.get("sort");
-    navigate(`?sort=${typeSort??"serial"}`);
-    console.log(`load ${typeSort}`);
-   setShowTodos(Object.assign(optionSort[typeSort ?? "serial"]))
+    typeSort = searchParamLink.get("sort");
+    navigate(`?sort=${typeSort ?? "serial"}`);
+    setShowTodos(optionSort[typeSort ?? "serial"]())
 
   }, [])
 
-  function setAlsoShowTodos() {
-    console.log(todos);
-    if (sortOrFilterFlag == "sort") {
-      let sorteby = (typeSort == null || typeSort == undefined) ? typeSort : "serial";
-      setShowTodos(Object.assign(optionSort[sorteby]));
-    }
-    console.log(searchParams);
-   if(searchParams.completed!=""||searchParams.title!==""||searchParams.taskId!=="")
-   {
-    searchTask();
-   }
-  }
- 
+  // function setAlsoShowTodos() {
+  //   if (sortOrFilterFlag == "sort") {
+  //     let sorteby = (typeSort == null || typeSort == undefined) ? typeSort : "serial";
+  //     setShowTodos(Object.assign(optionSort[sorteby]));
+  //   }
+  //   console.log(searchParams);
+  //  if(searchParams.completed!=""||searchParams.title!==""||searchParams.taskId!=="")
+  //  {
+  //   searchTodoFlag();
+  //  }
+  // }
+
 
 
   function sortedChange(e) {
     navigate(`?sort=${e.target.value}`);
-    setShowTodos(optionSort[e.target.value]);
-    setAlsoShowTodos();
-    sortOrFilterFlag == "sort";
+    debugger;
+    let temp = optionSort[e.target.value]();
+    console.log(temp);
+    let tempSearch = temp.filter((t) => {
+      return ((searchParams.taskId === "" || t.id == searchParams.taskId) &&
+        (searchParams.completed == "" || (t.completed).toString() == searchParams.completed) &&
+        (searchParams.title == "" || searchParams.title == t.title))
+    })
+    setShowTodos(tempSearch);
+    //setAlsoShowTodos();
+    //  sortOrFilterFlag == "sort";
   }
 
 
   useEffect(() => {
     async function fatchData() {
-      let todosRequest = await getMoreInformetionAbouteUser(id, setLoad, setWrongRequest,"todos")
+      let todosRequest = await getMoreInformetionAbouteUser(id, setLoad, setWrongRequest, "todos")
       todos = todosRequest.params;
       setShowTodos(Object.assign(todos));
-      setFoundTask(todosRequest.code == 200 ? true : false);
+      setFoundTodoFlag(todosRequest.code == 200 ? true : false);
     }
     fatchData();
   }, [wrongRequest]);
+
+  
   function setTodo(id, taskToUpdate) {
-    typeSort = searchParam.get("sort");
+    typeSort = searchParamLink.get("sort");
     let temp = todos.map((todo) => {
       if (todo.id == id) {
         let newt = Object.assign(taskToUpdate);
@@ -78,17 +83,31 @@ export default function Todos() {
         return Object.assign(todo);
     }
     )
-    console.log(temp);
     todos = [...temp];
-    setAlsoShowTodos();
+    // setAlsoShowTodos();
+    let tempSort = optionSort[typeSort]();
+    console.log(searchParams);
+    let tempsortAndSearch = tempSort.filter((t) => {
+      return ((searchParams.taskId === "" || t.id == searchParams.taskId) &&
+        (searchParams.completed != "yes" && searchParams.completed != "no" || t.completed == (searchParams.completed == "yes" ? true : false)) &&
+        (searchParams.title == "" || searchParams.title == t.title))
+    })
+    console.log(tempsortAndSearch);
+    setShowTodos(tempsortAndSearch)
+
   }
   function deleteFromTodos(id) {
-    typeSort = Object.assign(searchParam.get("sort"));
-    let index = todos.findIndex((t) => t.id == id)
+    let indexTosos = todos.findIndex((t) => t.id == id)
     let upDate = [...todos];
-    upDate.splice(index, 1);
-    todos =[...upDate];
-    setAlsoShowTodos();
+    upDate.splice(indexTosos, 1);
+    todos = [...upDate];
+    let indexShowTosos = showTodos.findIndex((t) => t.id == id)
+    let upDateshowTodos = [...showTodos];
+    upDateshowTodos.splice(indexShowTosos, 1);
+
+    // setAlsoShowTodos();
+    setShowTodos([...upDateshowTodos]);
+
   }
   const taskValues = {
     title: '',
@@ -101,6 +120,7 @@ export default function Todos() {
   }
   const [searchParams, setSearchParams] = useState(searchValues);
   const handleSearchChange = (e) => {
+    e.preventDefault();
     let { name, value } = e.target;
     setSearchParams({
       ...searchParams,
@@ -108,18 +128,20 @@ export default function Todos() {
     })
     e.target.classList.remove("notTouch");
   }
-  function searchTask() {
-    let temp = todos.filter((t) => {
+  function searchTodos() {
+    typeSort = searchParamLink.get("sort");
+    let tempSort = optionSort[typeSort]();
+    let tempsortAndSearch = tempSort.filter((t) => {
       return ((searchParams.taskId === "" || t.id == searchParams.taskId) &&
-        (searchParams.completed == "" || (t.completed).toString() == searchParams.completed) &&
+        (searchParams.completed != "yes" && searchParams.completed != "no" || t.completed == (searchParams.completed == "yes" ? true : false)) &&
         (searchParams.title == "" || searchParams.title == t.title))
     })
-    sortOrFilterFlag = "filter"
-    setShowTodos(temp);
-    setSearchTodo(false);
+    // sortOrFilterFlag = "filter"
+    setShowTodos(tempsortAndSearch);
 
   }
   const [details, setDetails] = useState(taskValues);
+  ///jfchgjkhvc
   const handleInputChange = (e) => {
     let { name, value } = e.target;
     if (e.target.name == "completed") {
@@ -132,27 +154,34 @@ export default function Todos() {
     })
     e.target.classList.remove("notTouch");
   }
-  async function saveDetails() {
+  async function saveNewTodo() {
     let taskData = {
       userId: id,
       title: details.title,
       completed: details.completed
     }
-    let afterPostTask = await postInformetion(taskData, setLoad,"todos");
+    let afterPostTask = await postInformetion(taskData, setLoad, "todos");
     if (afterPostTask.code == 200) {
-      setAddTask(false);
+      setaddTodoFlag(false);
       let upDate = Array.from(todos);
       let newTask = Object.assign(afterPostTask.params);
       upDate = [...upDate, newTask];
       todos = upDate;
-      setAlsoShowTodos();
+      typeSort = searchParamLink.get("sort");
+      let tempSort = optionSort[typeSort]();
+      let tempsortAndSearch = tempSort.filter((t) => {
+        return ((searchParams.taskId === "" || t.id == searchParams.taskId) &&
+          (searchParams.completed != "yes" && searchParams.completed != "no" || t.completed == (searchParams.completed == "yes" ? true : false)) &&
+          (searchParams.title == "" || searchParams.title == t.title))
+      })
+      setShowTodos(tempsortAndSearch);
     }
   }
 
   return (
     <>
       {!wrongRequest ?
-        <div style={{ opacity: addTask ? "0.2" : "1" }}>
+        <div style={{ opacity: addTodoFlag ? "0.2" : "1" }}>
           {!load ?
             <div>
               <h1>Todos</h1>
@@ -163,15 +192,15 @@ export default function Todos() {
                   <option value="alphabetic">Alphabetic</option>
                   <option value="completed">Completed</option>
                 </select>
-                <button onClick={()=> { setSearchParams(searchValues);setShowTodos(optionSort[typeSort])}}>Clear filter</button>
-                <button onClick={() => setAddTask(true)} >➕</button>
-                <button onClick={() => setSearchTodo(true)}>🔍</button>
+                <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort]()) }}>Clear filter</button>
+                <button onClick={() => setaddTodoFlag(true)} >➕</button>
+                <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
               </div>
-              {(!foundTask) ? <h2>Not Found </h2>
+              {(!foundTodoFlag) ? <h2>Not Found </h2>
                 : showTodos.map((task) => {
                   return <Todo setLoad={setLoad} key={task.id} task={task} setTodos={setTodo} deleteFromTodos={deleteFromTodos} />
                 })}
-
+              {showTodos.length == 0 && <h3>not found todos</h3>}
             </div>
             :
             <div >
@@ -185,10 +214,10 @@ export default function Todos() {
           }}>try again</button>
         </div>
       }
-      {addTask &&
+      {addTodoFlag &&
         <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "60vh", right: "40vw", padding: "2vh" }}>
           <button onClick={() => {
-            setAddTask(false);
+            setaddTodoFlag(false);
           }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
           <h3>Add Task</h3>
           {/* <label htmlFor="city">User Id</label><br />
@@ -200,27 +229,28 @@ export default function Todos() {
           <button type="sumbit" id='submitButton' className='submit'
             onClick={(e) => {
               e.preventDefault();
-              saveDetails();
+              saveNewTodo();
             }}>Add</button>
 
         </div>
       }
-      {searchTodo &&
+      {searchTodoFlag &&
         <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "30vh", right: "40vw", padding: "2vh" }}>
           <button onClick={() => {
-            setSearchTodo(false);
+            setsearchTodoFlag(false);
           }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
           <h3>search Task</h3>
           <label htmlFor="taskId">Task Id</label><br />
-          <input id="taskId" className='notTouch' name="taskId" onChange={(e) => handleSearchChange(e)} type="number" placeholder='12' min="1" /><br />
+          <input id="taskId" className='notTouch' name="taskId" value={searchParams.taskId} onChange={(e) => handleSearchChange(e)} type="number" placeholder="12" min="1" /><br />
           <label htmlFor="title">Title</label><br />
-          <input id="title" className='notTouch' name="title" type="text" required onChange={(e) => handleSearchChange(e)} /><br />
+          <input id="title" className='notTouch' name="title" value={searchParams.title} type="text" required onChange={(e) => handleSearchChange(e)} /><br />
           <label htmlFor="completed">Completed</label><br />
-          <input type="text" name="completed" placeholder='true/false' onChange={(e) => handleSearchChange(e)} /><br />
+          <input type="text" name="completed" value={searchParams.completed} placeholder='yes / no' onChange={(e) => handleSearchChange(e)} /><br />
           <button type="sumbit" id='submitButton' className='submit'
             onClick={(e) => {
               e.preventDefault();
-              searchTask();
+              searchTodos();
+              setsearchTodoFlag(false);
             }}>search</button>
 
         </div>

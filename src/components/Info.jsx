@@ -16,9 +16,7 @@ export default function Info() {
           <h4>suite: {userData.address?.suite??" "}</h4>
           <h4>city: {userData.address?.city??" "}</h4>
           <h4>zipcode: {userData.address?.zipcode??" "}</h4>
-          
             <h4>geo: lat:{userData.address?.geo?.lat??" "} lng {userData.address?.geo?.lng??" "}</h4>
-          
         </div>
         <h3>phone {userData?.phone??" "}</h3>
         <h3>website {userData?.website??" "}</h3>

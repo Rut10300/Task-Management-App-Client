@@ -8,11 +8,11 @@ let posts = [];
 export default function Posts() {
   const navigate = useNavigate();
   const [load, setLoad] = useState(true);
-  const [foundPost, setFoundPost] = useState(false);
   const [wrongRequest, setWrongRequest] = useState(false);
   const { id } = useParams();
   const [searchPost, setSearchPost] = useState(false);
   const [addPost, setAddPost] = useState(false);
+  const [foundPost, setFoundPost] = useState(false);
   const [showPosts, setShowPosts] = useState([{}, {}]);
   useEffect(() => {
     async function fatchData() {
@@ -24,6 +24,8 @@ export default function Posts() {
     }
     fatchData();
   }, [wrongRequest]);
+
+
 
   function setPost(id, postToUpdate) {
     let temp = posts.map((post) => {
@@ -63,6 +65,7 @@ export default function Posts() {
   }
 
   const handleSearchChange = (e) => {
+    e.preventDefault();
     let { name, value } = e.target;
     setSearchParamsPost({
       ...searchParamsPost,
@@ -113,7 +116,7 @@ export default function Posts() {
             <div>
               <h1>Posts</h1>
               <div style={{ display: "flex" }}>
-                <button onClick={() => {setSearchParamsPost(searchValuesPost);setAlsoShowPosts()}}>Clear filter</button>
+                <button onClick={() => { setShowPosts(posts);searchParamsPost(searchValuesPost)  }}>Clear filter</button>
                 <button onClick={() => setAddPost(true)} >➕</button>
                 <button onClick={() => setSearchPost(true)}>🔍</button>
               </div>
@@ -121,7 +124,7 @@ export default function Posts() {
                 : showPosts.map((post1) => {
                   return <Post setLoad={setLoad} key={post1.id} post={post1} setPosts={setPost} deleteFromPosts={deleteFromPosts} />
                 })}
-
+              {showPosts.length == 0 && <h3>not found post</h3>}
             </div>
             :
             <div >
@@ -162,9 +165,9 @@ export default function Posts() {
           }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
           <h3>Search Post</h3>
           <label htmlFor="id">Post Id</label><br />
-          <input id="id" className='notTouch' name="id" onChange={(e) => handleSearchChange(e)} type="number" placeholder='12' min="1" /><br />
+          <input id="id" className='notTouch' name="id" value={searchParamsPost.id} onChange={(e) => handleSearchChange(e)} type="number" placeholder='12' min="1" /><br />
           <label htmlFor="title">Title</label><br />
-          <input id="title" className='notTouch' name="title" type="text" required onChange={(e) => handleSearchChange(e)} /><br />
+          <input id="title" className='notTouch' name="title" value={searchParamsPost.title}type="text" required onChange={(e) => handleSearchChange(e)} /><br />
           <button type="sumbit" id='submitButton' className='submit'
             onClick={(e) => {
               e.preventDefault();
