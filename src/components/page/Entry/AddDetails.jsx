@@ -5,8 +5,9 @@ import ErrorMessege from '../../ErrorMessege';
 import LoadingMessage from '../../LoadingMessage';
 import NotFound from '../../NotFound';
 export default function AddDetails() {
-    let userdata = location.state.userDetails;
     const location = useLocation();
+    let userdata = location.state.userDetails;
+
     const [load, setLoad] = useState(false);
     const [worngRequest, setworngRequest] = useState(false);
     const navigate = useNavigate();
@@ -69,7 +70,7 @@ export default function AddDetails() {
     }
     return (
         <>
-        {userdata==null?
+        {userdata!=null?
         <>
             {!worngRequest ?
                 <div>
