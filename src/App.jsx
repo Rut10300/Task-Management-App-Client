@@ -10,6 +10,7 @@ import Posts from './components/Posts'
 import LayoutHome from './components/LayoutHome'
 import AddDetails from './components/AddDetails'
 import NotFound from './components/NotFound'
+import Photos from './components/Photos'
 
 
 import { Routes, Route, NavLink, Link, Outlet, Navigate } from "react-router-dom"
@@ -31,7 +32,11 @@ function App() {
             <Route index element={<Home />} />
             <Route path='info' element={<Info />} />
             <Route path='todos' element={<Todos />} />
-            <Route path='albums' element={<Albums />} />
+            <Route path='albums' element={<Outlet />} >
+              <Route index element={<Albums />} />
+              <Route path=':albumId/photos' element={<Photos />} />
+            </Route>
+
             <Route path='posts' element={<Posts />} />
 
           </Route>

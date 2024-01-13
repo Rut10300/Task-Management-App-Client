@@ -1,5 +1,4 @@
 export async function getUserDetails(userName,password, setLoad, setworngRequest) {
-    console.log(userName);
     try {
         setLoad(true);
         const response = await fetch(`http://localhost:3000/users?username=${userName}&&website=${password}`);
@@ -12,7 +11,6 @@ export async function getUserDetails(userName,password, setLoad, setworngRequest
         const promiseData = await response.json();
         let data = promiseData[0];
         setLoad(false)
-        console.log(data);
         if (data == null) {
 
             return { code: 300, message: "NotFound", params: null };
@@ -101,7 +99,6 @@ export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,
     }
 }
 export async function putInformetion(id, informetion,setLoad,typeInformetion) {
-console.log("pppppppp");
     try {
         setLoad!=null?? setLoad(true);
         const response = await fetch(`http://localhost:3000/${typeInformetion}/${id}`, {
@@ -187,6 +184,30 @@ export  async function getCommentsFromServer(id)
     }
     catch (error) {
     
+        return { code: 100, message: error, params: null };
+    }
+}
+
+export async function getPhotos(id, setLoad, setworngRequest,typeInformetion) {
+    console.log(typeInformetion);
+    try {
+        setLoad(true);
+        const response = await fetch(`http://localhost:3000/${typeInformetion}`);
+        if (!response.ok) {
+            setworngRequest(true);
+            throw new Error("Network response was not ok");
+
+        }
+        const promiseData = await response.json();
+        let data = promiseData;
+        setLoad(false)
+        if (data == null) {
+            return { code: 300, message: "NotFound", params: null };
+        }
+        return { code: 200, message: "ok", params: data };
+    }
+    catch (error) {
+        setLoad(false);
         return { code: 100, message: error, params: null };
     }
 }
