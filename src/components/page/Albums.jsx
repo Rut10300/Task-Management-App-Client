@@ -37,6 +37,7 @@ export default function Albums() {
       [name]: value
     })
     //e.target.classList.remove("notTouch");
+    //HI
   }
   function searchAlbums() {
     let temp = albums.filter((a) => {
