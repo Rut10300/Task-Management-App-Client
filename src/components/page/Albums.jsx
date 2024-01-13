@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, NavLink, Link, useNavigate, useParams, Outlet } from "react-router-dom"
-import Album from './Album';
-import AlbumAdd from './Add/AlbumAdd'
-import AlbumSearch from './Search/AlbumSearch';
-import { getMoreInformetionAbouteUser,postInformetion } from '../JS/request'
+import Album from '../Album';
+import AlbumAdd from '../Add/AlbumAdd'
+import AlbumSearch from '../Search/AlbumSearch';
+import { getMoreInformetionAbouteUser,postInformetion } from '../../JS/request'
 let albums = [];
 export default function Albums() {
   const navigate = useNavigate();

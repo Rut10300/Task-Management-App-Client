@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { Routes, Route, NavLink, Link, Outlet } from "react-router-dom"
+import {  Outlet } from "react-router-dom"
 
 export default function Info() {
   let userData = JSON.parse(localStorage.getItem("currentUser"));
-  console.log(userData);
   return (
     <>
       <div>

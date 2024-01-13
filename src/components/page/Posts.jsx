@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate } from "react-router-dom"
-import { getMoreInformetionAbouteUser, postInformetion } from '../JS/request';
-import Post from './Post';
+import { getMoreInformetionAbouteUser, postInformetion } from '../../JS/request';
+import Post from '../Post';
 import Todos from './Todos';
 
 let posts = [];

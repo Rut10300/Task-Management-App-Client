@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, NavLink, Link, useParams, useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import Todo from './Todo';
-import { postInformetion, getMoreInformetionAbouteUser } from '../JS/request';
-
-let sortOrFilterFlag = "sort";
-
+import { Routes, Route, NavLink, Link, useParams, useLocation, useNavigate, useSearchParams, json } from "react-router-dom"
+import Todo from '../Todo';
+import { postInformetion, getMoreInformetionAbouteUser } from '../../JS/request';
+import NotFound from '../NotFound';
 let todos = [];
 export default function Todos() {
   const navigate = useNavigate();
@@ -15,41 +13,28 @@ export default function Todos() {
   const [foundTodoFlag, setFoundTodoFlag] = useState(false);
   const [wrongRequest, setWrongRequest] = useState(false);
   const { id } = useParams();
+  const userDeitels=JSON.parse(localStorage.getItem("currentUser"))
   const [searchTodoFlag, setsearchTodoFlag] = useState(false);
   const [addTodoFlag, setaddTodoFlag] = useState(false);
   const [showTodos, setShowTodos] = useState([{}, {}]);
+  
   let optionSort = {
     alphabetic: () => todos.sort((a, b) => a.title.localeCompare(b.title)),
     serial: () => todos.sort((a, b) => a.id - b.id),
-    random: () => { todos.sort((a, b) => { let rnd = Math.random(0.0, 1.1); rnd > 0.5 ? 1 : -1 }) },
+    random: () => {  todos.sort(() => Math.random() - 0.5) },
     completed: () => todos.sort((a, b) => a.completed - b.completed)
   };
-  useEffect(() => {
-    typeSort = searchParamLink.get("sort");
-    navigate(`?sort=${typeSort ?? "serial"}`);
-    setShowTodos(optionSort[typeSort ?? "serial"]())
+  // useEffect(() => {
+  //   console.log(1);
+  //   typeSort = searchParamLink.get("sort");
+  //   navigate(`?sort=${typeSort ?? "serial"}`);
+  //   setShowTodos(optionSort[typeSort ?? "serial"]())
 
-  }, [])
-
-  // function setAlsoShowTodos() {
-  //   if (sortOrFilterFlag == "sort") {
-  //     let sorteby = (typeSort == null || typeSort == undefined) ? typeSort : "serial";
-  //     setShowTodos(Object.assign(optionSort[sorteby]));
-  //   }
-  //   console.log(searchParams);
-  //  if(searchParams.completed!=""||searchParams.title!==""||searchParams.taskId!=="")
-  //  {
-  //   searchTodoFlag();
-  //  }
-  // }
-
-
+  // }, [])
 
   function sortedChange(e) {
     navigate(`?sort=${e.target.value}`);
-    debugger;
     let temp = optionSort[e.target.value]();
-    console.log(temp);
     let tempSearch = temp.filter((t) => {
       return ((searchParams.taskId === "" || t.id == searchParams.taskId) &&
         (searchParams.completed == "" || (t.completed).toString() == searchParams.completed) &&
@@ -67,6 +52,10 @@ export default function Todos() {
       todos = todosRequest.params;
       setShowTodos(Object.assign(todos));
       setFoundTodoFlag(todosRequest.code == 200 ? true : false);
+      typeSort = searchParamLink.get("sort");
+      navigate(`?sort=${typeSort ?? "serial"}`);
+      setShowTodos(optionSort[typeSort ?? "serial"]())
+  
     }
     fatchData();
   }, [wrongRequest]);
@@ -84,7 +73,6 @@ export default function Todos() {
     }
     )
     todos = [...temp];
-    // setAlsoShowTodos();
     let tempSort = optionSort[typeSort]();
     console.log(searchParams);
     let tempsortAndSearch = tempSort.filter((t) => {
@@ -180,7 +168,8 @@ export default function Todos() {
 
   return (
     <>
-      {!wrongRequest ?
+ {   id==userDeitels.id?
+    <>  {!wrongRequest ?
         <div style={{ opacity: addTodoFlag ? "0.2" : "1" }}>
           {!load ?
             <div>
@@ -254,7 +243,9 @@ export default function Todos() {
             }}>search</button>
 
         </div>
-      }
+     }
+      </>:<NotFound/>
+    }
     </>
   )
 }

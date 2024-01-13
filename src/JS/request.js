@@ -1,19 +1,19 @@
 export async function getUserDetails(userName,password, setLoad, setworngRequest) {
     try {
-        setLoad(true);
+      setLoad(true);
+      console.log(password);
         const response = await fetch(`http://localhost:3000/users?username=${userName}&&website=${password}`);
-        console.log(response);
         if (!response.ok) {
             setworngRequest(true);
             throw new Error("Network response was not ok");
-
         }
         const promiseData = await response.json();
+        console.log(response);
         let data = promiseData[0];
-        setLoad(false)
+        setLoad(false);
+        console.log(data);
         if (data == null) {
-
-            return { code: 300, message: "NotFound", params: null };
+            return { code: 304, message: "NotFound", params: null };
         }
         return { code: 200, message: "ok", params: data };
     }
@@ -23,15 +23,12 @@ export async function getUserDetails(userName,password, setLoad, setworngRequest
     }
 }
 
-export async function postUserDetails(userName, password, setLoad, setworngRequest) {
+export async function postUserDetails(user, setLoad, setworngRequest) {
     try {
         setLoad(true);
         const response = await fetch(`http://localhost:3000/users`, {
             method: "POST",
-            body: JSON.stringify({
-                username: userName,
-                website: password
-            }),
+            body: JSON.stringify( user),
             headers: {
                 'Content-type': 'application/json'
             },
@@ -40,7 +37,9 @@ export async function postUserDetails(userName, password, setLoad, setworngReque
             setworngRequest(true);
             throw new Error("Network response was not ok");
         }
+        console.log(response);
         const promiseData = await response.json();
+        console.log(promiseData);
         setLoad(false);
         return { code: 200, message: "ok", params: promiseData };
     }
@@ -50,31 +49,31 @@ export async function postUserDetails(userName, password, setLoad, setworngReque
         return { code: 100, message: error, params: null };
     }
 }
-export async function putUserDetails(user) {
+// export async function putUserDetails(user) {
 
-    try {
-        setLoad(true);
-        const response = await fetch(`http://localhost:3000/users/${id}`, {
-            method: "PUT",
-            body: JSON.stringify(user),
-            headers: {
-                'Content-type': 'application/json'
-            },
-        });
-        console.log(response);
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        const promiseData = await response.json();
-        console.log(promiseData);
-        setLoad(false);
-        return promiseData;
-    }
-    catch (error) {
-        setLoad(false);
-        return false;
-    }
-}
+//     try {
+//         setLoad(true);
+//         const response = await fetch(`http://localhost:3000/users/${id}`, {
+//             method: "PUT",
+//             body: JSON.stringify(user),
+//             headers: {
+//                 'Content-type': 'application/json'
+//             },
+//         });
+//         console.log(response);
+//         if (!response.ok) {
+//             throw new Error("Network response was not ok");
+//         }
+//         const promiseData = await response.json();
+//         console.log(promiseData);
+//         setLoad(false);
+//         return promiseData;
+//     }
+//     catch (error) {
+//         setLoad(false);
+//         return false;
+//     }
+// }
 
 export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,typeInformetion) {
     try {
@@ -89,7 +88,7 @@ export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,
         let data = promiseData;
         setLoad(false)
         if (data == null) {
-            return { code: 300, message: "NotFound", params: null };
+            return { code: 304, message: "NotFound", params: null };
         }
         return { code: 200, message: "ok", params: data };
     }

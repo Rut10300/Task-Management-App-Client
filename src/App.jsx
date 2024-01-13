@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import './App.css'
-import LogIn from "./components/LogIn"
-import Register from "./components/Register"
-import Home from "./components/Home"
-import Info from "./components/Info"
-import Todos from "./components/Todos"
-import Albums from "./components/Albums"
-import Posts from './components/Posts'
+import LogIn from "./components/page/Entry/LogIn"
+import Register from "./components/page/Entry/Register"
+import Home from "./components/page/Home"
+import Info from "./components/page/Info"
+import Todos from "./components/page/Todos"
+import Albums from "./components/page/Albums"
+import Posts from './components/page/Posts'
 import LayoutHome from './components/LayoutHome'
-import AddDetails from './components/AddDetails'
+import AddDetails from './components/page/Entry/AddDetails'
 import NotFound from './components/NotFound'
 import Photos from './components/Photos'
 
