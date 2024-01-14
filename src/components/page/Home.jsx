@@ -13,8 +13,7 @@ export default function Home() {
      {id == userDetails.id ?
         <> 
     <div style={{height:"95vh"}}>
-      <h2 style={{paddingTop:"20vh"}}>hello {userDetails.name}</h2>
-    <h1 >🏠 of Torah and 📖</h1>
+      <h2 style={{paddingTop:"20vh"}}>Hello {userDetails.name}</h2>
     </div>
     </> : <NotFound />
       }

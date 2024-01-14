@@ -1,7 +1,9 @@
 #root {
-  margin-top: 15vh,auto;
+  font-family: cursive,Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin-top: 7vh;
   padding: 0rem;
   text-align: center;
+  
   /* background-image: url(./img/backgroond.png);
   background-repeat: no-repeat;
   background-attachment: fixed;

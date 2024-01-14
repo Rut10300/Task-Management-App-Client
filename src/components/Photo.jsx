@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { Routes, Route, NavLink, Link } from "react-router-dom"
-import {deleteInformetion,putInformetion} from "../JS/request"
+import { deleteInformetion, putInformetion } from "../JS/request"
 
-export default function Photo({ setLoad, photo, updateShowPhotos,deleteFromShowPhotos }) {
-
+export default function Photo({ setLoad, photo, updateShowPhotos, deleteFromShowPhotos }) {
     const [upDate, setUpDate] = useState(false);
     let detailsPhoto = { title: photo.title, url: photo.url };
     const [updatePhotoDetails, setUpdatePhotoDetails] = useState(detailsPhoto);
+
     const handleUpdatePhotoChange = (e) => {
         let { name, value } = e.target;
         setUpdatePhotoDetails({
@@ -15,6 +14,7 @@ export default function Photo({ setLoad, photo, updateShowPhotos,deleteFromShowP
         })
         e.target.classList.remove("notTouch");
     }
+
     function updatePhoto() {
         let photoToUpdate = {
             id: photo.id,
@@ -24,7 +24,6 @@ export default function Photo({ setLoad, photo, updateShowPhotos,deleteFromShowP
         }
         let afterPhotoPost = putInformetion(photo.id, photoToUpdate, setLoad, "photos");
         if (afterPhotoPost) {
-            debugger;
             updateShowPhotos(photo.id, photoToUpdate);
             setUpDate(false);
         }
@@ -33,7 +32,7 @@ export default function Photo({ setLoad, photo, updateShowPhotos,deleteFromShowP
     async function deletePhoto() {
         let afterDeleteRequ = await deleteInformetion(photo.id, "photos");
         if (afterDeleteRequ)
-        deleteFromShowPhotos(photo.id);
+            deleteFromShowPhotos(photo.id);
     }
 
     return (
@@ -44,7 +43,7 @@ export default function Photo({ setLoad, photo, updateShowPhotos,deleteFromShowP
             <img src={photo.thumbnailUrl} alt="" />
             {!upDate ? <button onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> :
                 <button onClick={(e) => { updatePhoto(); e.preventDefault(); }}>ok</button>}
-            <button onClick={(e) => {  e.preventDefault();   deletePhoto()  }}>🗑️</button>
+            <button onClick={(e) => { e.preventDefault(); deletePhoto() }}>🗑️</button>
         </>
     )
 }

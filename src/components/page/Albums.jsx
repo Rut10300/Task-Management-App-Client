@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, NavLink, Link, useNavigate, useParams, Outlet } from "react-router-dom"
+import { Link, useNavigate, useParams, Outlet } from "react-router-dom"
 import Album from '../Album';
 import AlbumAdd from '../Add/AlbumAdd'
 import AlbumSearch from '../Search/AlbumSearch';
-import { getMoreInformetionAbouteUser,postInformetion } from '../../JS/request'
+import { getMoreInformetionAbouteUser, postInformetion } from '../../JS/request'
 import LoadingMessage from '../LoadingMessage';
 import NotFound from '../NotFound';
+import '../css/albums.css'
 let albums = [];
 export default function Albums() {
   const userDetails = JSON.parse(localStorage.getItem("currentUser"))
@@ -17,6 +18,8 @@ export default function Albums() {
   const [foundAlbumsFlag, setFoundAlbumsFlag] = useState(false);
   const [searchAlbumsFlag, setSearchAlbumsFlag] = useState(false);
   const [showAlbums, setShowAlbums] = useState([{}, {}]);
+
+
   useEffect(() => {
     async function fatchData() {
       let albumsRequest = await getMoreInformetionAbouteUser(id, setLoad, setWrongRequest, "albums")
@@ -28,33 +31,34 @@ export default function Albums() {
   }, [wrongRequest]);
 
 
-  const searchValuesAlbum = {
+  const valuesSearchAlbum = {
     id: "",
     title: ""
   }
-  const [searchParamsAlbum, setSearchParamsAlbum] = useState(searchValuesAlbum);
+  const [searchParamsAlbum, setSearchParamsAlbum] = useState(valuesSearchAlbum);
   const handleSearchChange = (name, value) => {
     setSearchParamsAlbum({
       ...searchParamsAlbum,
       [name]: value
     })
     //e.target.classList.remove("notTouch");
-    //HI
   }
+
+  //search
   function searchAlbums() {
-    let temp = albums.filter((a) => {
+    let albumsAfterFilter = albums.filter((a) => {
       return ((searchParamsAlbum.id == "" || searchParamsAlbum.id == a.id) &&
         (searchParamsAlbum.title == "" || searchParamsAlbum.title == a.title))
     })
-    setShowAlbums(temp);
+    setShowAlbums(albumsAfterFilter);
     setSearchAlbumsFlag(false);
 
   }
 
-
+  //add
   async function saveNewAlbum(title) {
     let albumsData = {
-      userId:id,
+      userId: id,
       title: title
     }
     let afterPostAlbum = await postInformetion(albumsData, setLoad, "albums");
@@ -70,40 +74,40 @@ export default function Albums() {
 
   return (
     <>
-     {id == userDetails.id ?
-        <> 
-      {!wrongRequest ?
-        <div style={{ opacity: addAlbumFlag ? "0.2" : "1" }}>
-          {!load ?
-            <div>
-              <h1>Albums</h1>
-              <div style={{ display: "flex" }}>
-                <button onClick={() => { setShowAlbums(albums); setSearchParamsAlbum(searchValuesAlbum) }}>Clear filter</button>
-                <button onClick={() => setAddAlbumFlag(true)} >➕</button>
-                <button onClick={() => setSearchAlbumsFlag(true)}>🔍</button>
-              </div>
-              {(!foundAlbumsFlag) ? <h2>Not Found </h2>
-                : showAlbums.map((album) => {
-                  return <Link to={`${album.id}/photos`}><Album setLoad={setLoad} key={album.id} album={album} /></Link> 
-                })}
-              {showAlbums.length == 0 && <h3>not found albums</h3>}
-            </div>
-            :
+      {id == userDetails.id ?
+        <>
+          {!wrongRequest ?
+            <div style={{ opacity: addAlbumFlag ? "0.2" : "1" }}>
+              {!load ?
+                <div>
+                  <h1>Albums</h1>
+                  <div id="lineButtons" style={{ display: "flex" }}>
+                    <button id="badd" onClick={() => setAddAlbumFlag(true)} >➕</button>
+                    <button id="bsearch"onClick={() => setSearchAlbumsFlag(true)}>🔍</button>
+                    {(searchParamsAlbum.id != "" || searchParamsAlbum.title != "") && <button onClick={() => { setShowAlbums(albums); setSearchParamsAlbum(valuesSearchAlbum) }}>Clear filter</button>}
+                  </div>
+                  {(!foundAlbumsFlag) ? <h2>Not Found </h2>
+                    :<div id="allAlbums" >{ showAlbums.map((album) => {
+                      return <Link id="link" to={`${album.id}/photos`}><Album setLoad={setLoad} key={album.id} album={album} /></Link>
+                    })}</div>}
+                  {showAlbums.length == 0 && <h3>not found albums</h3>}
+                </div>
+                :
+                <div >
+                  <LoadingMessage />
+                </div>}
+            </div > :
             <div >
-              <LoadingMessage/>
-            </div>}
-        </div > :
-        <div >
-          <h1>something worng...</h1>
-          <button onClick={() => {
-            setWrongRequest(false);
-          }}>try again</button>
-        </div>
-      }
-      {addAlbumFlag && <AlbumAdd setAddAlbumFlag={setAddAlbumFlag} saveNewAlbum={saveNewAlbum} />}
-      {searchAlbumsFlag && <AlbumSearch setSearchAlbumsFlag={setSearchAlbumsFlag}searchParamsAlbum={searchParamsAlbum} searchAlbums={searchAlbums} handleSearchChange={handleSearchChange} />}
-      <Outlet/>
-      </> : <NotFound />
+              <h1>something worng...</h1>
+              <button onClick={() => {
+                setWrongRequest(false);
+              }}>try again</button>
+            </div>
+          }
+          {addAlbumFlag && <AlbumAdd setAddAlbumFlag={setAddAlbumFlag} saveNewAlbum={saveNewAlbum} />}
+          {searchAlbumsFlag && <AlbumSearch setSearchAlbumsFlag={setSearchAlbumsFlag} searchParamsAlbum={searchParamsAlbum} searchAlbums={searchAlbums} handleSearchChange={handleSearchChange} />}
+          <Outlet />
+        </> : <NotFound />
       }
     </>
   )
