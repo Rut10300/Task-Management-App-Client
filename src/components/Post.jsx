@@ -36,7 +36,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     let afterDeleteRequ = await deleteInformetion(post.id, "posts");
     if (afterDeleteRequ) {
       deleteFromPosts(post.id);
-      let afterGetComments = await getCommentsFromServer(post.id);
+      let afterGetComments = await getCommentsFromServer(post.id,setLoadComments);
       if (afterGetComments.code == 200) {
         afterGetComments.params.forEach(async (element) => {
           let afterDeleteComment = await deleteInformetion(element.id, 'comments');
@@ -120,7 +120,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
           }} />}  
        </div>}
       {!upDateFlag ?
-        <button onClick={(e) => {  setUpDate(true); e.preventDefault(); }} >🖋️</button> 
+        <button onClick={(e) => {  setUpDateFlag(true); e.preventDefault(); }} >🖋️</button> 
        : <button onClick={() => updatePost()}>ok</button>}
       <button onClick={(e) => { e.preventDefault(); deletePostFunc();}}>🗑️</button>
       {activePost && seeAllCommentsFlag && loadComments &&<LoadingMessage setLoad={setLoadComments}/>}
