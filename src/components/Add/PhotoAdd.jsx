@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Routes, Route, NavLink, Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 export default function PhotoAdd({ saveNewPhoto, setAddPhotoFlag }) {
     const { albumId } = useParams();
     const [load, setLoad] = useState(true);
 
     const [details, setDetails] = useState({ title: "", url: "", thumbnailUrl: "" });
+
     const handleInputChange = (e) => {
         const { value, name } = e.target
         setDetails({
@@ -35,9 +36,7 @@ export default function PhotoAdd({ saveNewPhoto, setAddPhotoFlag }) {
                         saveNewPhoto(details);
                         setAddPhotoFlag(false);
                     }}>Add</button>
-
             </div>
-
         </>
     )
 }

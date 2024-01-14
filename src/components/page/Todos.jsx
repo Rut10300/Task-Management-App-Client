@@ -82,7 +82,7 @@ export default function Todos() {
     completed: ""
   }
   const [searchParams, setSearchParams] = useState(searchValues);
-  const handleSearchChange = (value,name) => {
+  const handleSearchChange = (value, name) => {
     setSearchParams({
       ...searchParams,
       [name]: value
@@ -138,7 +138,7 @@ export default function Todos() {
                     <option value="completed">Completed</option>
                   </select>
                   <div className='option'>
-                    <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>
+                    {(searchParams.taskId != "" || searchParams.title != "" || searchParams.completed != "") && <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>}
                     <button onClick={() => setaddTodoFlag(true)} >➕</button>
                     <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
                   </div>
@@ -151,10 +151,10 @@ export default function Todos() {
               </div>
               : <LoadingMessage />}
           </div > :
-          <ErrorMessege  setWrongRequest={setWrongRequest}/>
+          <ErrorMessege setWrongRequest={setWrongRequest} />
         }
-          {addTodoFlag &&<TodoAdd setaddTodoFlag={setaddTodoFlag} saveNewTodo={saveNewTodo} />}
-          {searchTodoFlag && <TodoSearch setsearchTodoFlag={setsearchTodoFlag} searchTodos={searchTodos}handleSearchChange={handleSearchChange}searchParams={searchParams}/> }
+          {addTodoFlag && <TodoAdd setaddTodoFlag={setaddTodoFlag} saveNewTodo={saveNewTodo} />}
+          {searchTodoFlag && <TodoSearch setsearchTodoFlag={setsearchTodoFlag} searchTodos={searchTodos} handleSearchChange={handleSearchChange} searchParams={searchParams} />}
         </> : <NotFound />
       }
 

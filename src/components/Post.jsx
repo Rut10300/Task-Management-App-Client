@@ -57,7 +57,6 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
       body: content.body
     };
     let afterPutPost = putInformetion(post.id, postToUpdate, setLoad, "posts");
-
     if (afterPutPost) {
       setPosts(post.id, postToUpdate);
       setUpDate(false);
