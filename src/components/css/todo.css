@@ -1,0 +1,22 @@
+.todo {
+    border: 2px solid black;
+    width: 30vw;
+    height: 35vh;
+    display: flex;
+    margin: 2px;
+    padding: 3px;
+    font-size: 5px sans-serif;
+    flex-direction: column;
+    justify-content: "space-between";
+    align-items: center;
+    
+}
+.buttons{
+    justify-content: "space-between";
+    display: flex;
+}
+#checked{
+    width: 2vw;
+    height: 2vw;
+    margin: 1vh;
+}

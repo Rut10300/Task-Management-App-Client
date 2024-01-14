@@ -145,16 +145,16 @@ export default function Todos() {
                   <button onClick={() => setaddTodoFlag(true)} >➕</button>
                   <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
                 </div>
-                {(!foundTodoFlag) ? <h2>Not Found </h2> : showTodos.map((todo) => {
-                  return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} />
-                })}
+                {(!foundTodoFlag) ? <h2>Not Found </h2> :<div style={{display:"flex" ,width:"100vw"}}>{ showTodos.map((todo) => {
+                  return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} />})}
+                  </div>}
                 {showTodos.length == 0 && <h3>not found todos</h3>}
               </div>
               : <LoadingMessage />}
           </div > :
           <ErrorMessege />
         }
-          {addTodoFlag ?? <div><TodoAdd setaddTodoFlag={setaddTodoFlag} saveNewTodo={saveNewTodo} /></div>}
+          {addTodoFlag ?? <TodoAdd setaddTodoFlag={setaddTodoFlag} saveNewTodo={saveNewTodo} />}
           {searchTodoFlag && <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "30vh", right: "40vw", padding: "2vh" }}>
             <button onClick={() => {
               setsearchTodoFlag(false);

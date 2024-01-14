@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { putInformetion, deleteInformetion } from '../JS/request'
 import { Outlet } from 'react-router-dom';
-
+import './css/todo.css'
 export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
     const [upDate, setUpDate] = useState(false);
     let detailsTodo = { title: todo.title, completed: todo.completed };
@@ -45,15 +45,18 @@ export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
     }
     return (
         <>
-            <form style={{ display: "flex", margin: "5px", padding: "3px", justifyContent: "space-between" }}>
-                <h3>{todo.id}</h3>
-                {!upDate ? <h3 style={{ width: "65vw" }}>{todo.title}</h3> : <input type="text" name="title" value={addTodoParams.title} onChange={(e) => handleTodoChange(e)} />}
-                <input type="checkbox" checked={addTodoParams.completed}  name="completed" onChange={(e) => handleTodoChange(e)} />
-                {!upDate ? <button onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> 
+            <form  style={{width:"12vw"}}>
+                <div className='todo'>
+                <p>{todo.id}</p>
+                {!upDate ? <p >{todo.title}</p> : <input type="text" name="title" value={addTodoParams.title} onChange={(e) => handleTodoChange(e)} />}
+                <input id="checked" type="checkbox" checked={addTodoParams.completed}  name="completed" onChange={(e) => handleTodoChange(e)} />
+                <div className='buttons'>{!upDate ? <button  onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> 
                 : <button onClick={(e) => { updateTodoTitle(); e.preventDefault(); }}>ok</button>}
                 <button onClick={(e) => {  e.preventDefault();  deleteTodoFunc()  }}>🗑️</button>
+                </div>
+                </div>
             </form>
-            <Outlet></Outlet>
+            
         </>
     )
 }

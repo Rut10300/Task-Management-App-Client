@@ -1,0 +1,31 @@
+*{
+    padding: 0rem;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+}
+
+
+
+nav {
+    margin-top: 0vh;
+    justify-content: space-around;
+    top:0%;
+    width: 100vw;
+    display: flex;
+    position: fixed;
+    background-color:#79D3E7;
+    padding: 10px;
+ 
+}
+.navLink{
+    color:#FBB040
+}
+
+.navLink:hover{
+   color: white;
+   box-shadow: white;
+}
+
+
+
