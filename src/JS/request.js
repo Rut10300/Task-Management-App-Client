@@ -1,7 +1,7 @@
-export async function getUserDetails(userName,password, setLoad, setworngRequest) {
+export async function getUserDetails(userName, password, setworngRequest) {
     try {
-      setLoad(true);
-      console.log(password);
+
+        console.log(password);
         const response = await fetch(`http://localhost:3000/users?username=${userName}&&website=${password}`);
         if (!response.ok) {
             setworngRequest(true);
@@ -10,7 +10,7 @@ export async function getUserDetails(userName,password, setLoad, setworngRequest
         const promiseData = await response.json();
         console.log(response);
         let data = promiseData[0];
-        setLoad(false);
+
         console.log(data);
         if (data == null) {
             return { code: 304, message: "NotFound", params: null };
@@ -18,7 +18,7 @@ export async function getUserDetails(userName,password, setLoad, setworngRequest
         return { code: 200, message: "ok", params: data };
     }
     catch (error) {
-        setLoad(false);
+
         return { code: 100, message: error, params: null };
     }
 }
@@ -28,7 +28,7 @@ export async function postUserDetails(user, setLoad, setworngRequest) {
         setLoad(true);
         const response = await fetch(`http://localhost:3000/users`, {
             method: "POST",
-            body: JSON.stringify( user),
+            body: JSON.stringify(user),
             headers: {
                 'Content-type': 'application/json'
             },
@@ -75,8 +75,9 @@ export async function postUserDetails(user, setLoad, setworngRequest) {
 //     }
 // }
 
-export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,typeInformetion) {
+export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest, typeInformetion) {
     try {
+        //setworngRequest(Math.random()>0.5);
         setLoad(true);
         const response = await fetch(`http://localhost:3000/users/${id}/${typeInformetion}`);
         if (!response.ok) {
@@ -97,9 +98,9 @@ export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,
         return { code: 100, message: error, params: null };
     }
 }
-export async function putInformetion(id, informetion,setLoad,typeInformetion) {
+export async function putInformetion(id, informetion, setLoad, typeInformetion) {
     try {
-        setLoad!=null?? setLoad(true);
+        setLoad != null ?? setLoad(true);
         const response = await fetch(`http://localhost:3000/${typeInformetion}/${id}`, {
             method: "PUT",
             body: JSON.stringify(informetion),
@@ -112,16 +113,16 @@ export async function putInformetion(id, informetion,setLoad,typeInformetion) {
             throw new Error("Network response was not ok");
         }
         const promiseData = await response.json();
-        setLoad!=null??  setLoad(false);
+        setLoad != null ?? setLoad(false);
         return promiseData;
     }
     catch (error) {
-        setLoad!=null??  setLoad(false);
+        setLoad != null ?? setLoad(false);
         return false;
     }
 }
 
-export async function deleteInformetion(id,typeInformetion) {
+export async function deleteInformetion(id, typeInformetion) {
     try {
         const response = await fetch(`http://localhost:3000/${typeInformetion}/${id}`, {
             method: "DELETE",
@@ -140,9 +141,9 @@ export async function deleteInformetion(id,typeInformetion) {
     }
 }
 
-export async function postInformetion(informetion,setLoad,typeInformetion) {
+export async function postInformetion(informetion, setLoad, typeInformetion) {
     try {
-        setLoad?? setLoad(true);
+        setLoad ?? setLoad(true);
         const response = await fetch(`http://localhost:3000/${typeInformetion}`, {
             method: "POST",
             body: JSON.stringify(informetion),
@@ -154,20 +155,19 @@ export async function postInformetion(informetion,setLoad,typeInformetion) {
             throw new Error("Network response was not ok");
         }
         const promiseData = await response.json();
-        setLoad?? setLoad(false);
+        setLoad ?? setLoad(false);
         return { code: 200, message: "ok", params: promiseData };
     }
     catch (error) {
-        setLoad?? setLoad(false);
+        setLoad ?? setLoad(false);
         console.log();
         return { code: 100, message: error, params: null };
     }
 }
 
-export  async function getCommentsFromServer(id)
-{
+export async function getCommentsFromServer(id) {
     try {
-       
+
         const response = await fetch(`http://localhost:3000/comments?postId=${id}`);
         if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -175,19 +175,19 @@ export  async function getCommentsFromServer(id)
         }
         const promiseData = await response.json();
         let data = promiseData;
-        
+
         if (data == null) {
             return { code: 300, message: "NotFound", params: null };
         }
         return { code: 200, message: "ok", params: data };
     }
     catch (error) {
-    
+
         return { code: 100, message: error, params: null };
     }
 }
 
-export async function getPhotos(id, setLoad, setworngRequest,typeInformetion) {
+export async function getPhotos(id, setLoad, setworngRequest, typeInformetion) {
     console.log(typeInformetion);
     try {
         setLoad(true);

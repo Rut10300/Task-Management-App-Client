@@ -10,7 +10,7 @@ import Posts from './components/page/Posts'
 import LayoutHome from './components/LayoutHome'
 import AddDetails from './components/page/Entry/AddDetails'
 import NotFound from './components/NotFound'
-import Photos from './components/Photos'
+import Photos from './components/page/Photos'
 
 
 import { Routes, Route, NavLink, Link, Outlet, Navigate } from "react-router-dom"

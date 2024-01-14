@@ -5,7 +5,6 @@ import ErrorMessege from '../../ErrorMessege';
 import LoadingMessage from '../../LoadingMessage';
 export default function LogIn() {
   const navigate = useNavigate();
-  const [load, setLoad] = useState(false);
   const [worngRequest, setworngRequest] = useState(false);
   const [detailsLogIn, setDetailsLogIn] = useState({ userName: '', password: '' });
   const handleLogInInputChange = (e) => {
@@ -18,11 +17,11 @@ export default function LogIn() {
   }
 
   async function logInUser() {
-    let userDetails = await getUserDetails(detailsLogIn.userName, detailsLogIn.password, setLoad, setworngRequest);
+    let userDetails = await getUserDetails(detailsLogIn.userName, detailsLogIn.password, setworngRequest);
     if (userDetails.code != 100) {
-      if (userDetails.code == 304)
-      {
-        alert("Incorrect Details");//לשאול רות
+      if (userDetails.code == 304) {
+        setDetailsLogIn({ userName: '', password: '' })
+        alert("Incorrect Details");
       }
       else {
         let id = userDetails.params.id;
@@ -35,22 +34,22 @@ export default function LogIn() {
   return (
     <>
       {!worngRequest ?
-        <div>
-          {(!load) ?
-            <div>
-              <h2>Log In</h2>
-              <form onSubmit={(e) => { e.preventDefault(); logInUser(); }}>
-                <label htmlFor="userName">User Name</label><br />
-                <input id="userName" type='text' name='userName' required onChange={(e) => handleLogInInputChange(e)} /><br />
-                <label htmlFor="password">Password</label><br />
-                <input id="password" type='password' name='password' autoComplete='2' required onChange={(e) => handleLogInInputChange(e)} /><br /><br />
-                <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}>Log In</button>
-              </form>
-              <Link to="/register">
-                Register
-              </Link>
-            </div>    :  <LoadingMessage />}
-        </div> :<ErrorMessege setworngRequest={setworngRequest} />
+        <div style={{ height: "90vh" }}>
+
+          <div>
+            <h2>Log In</h2>
+            <form onSubmit={(e) => { e.preventDefault(); logInUser(); }}>
+              <label htmlFor="userName">User Name</label><br />
+              <input id="userName" type='text' value={detailsLogIn.userName} name='userName' required onChange={(e) => handleLogInInputChange(e)} /><br />
+              <label htmlFor="password">Password</label><br />
+              <input id="password" type='password' value={detailsLogIn.password}name='password' autoComplete='2' required onChange={(e) => handleLogInInputChange(e)} /><br /><br />
+              <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}>Log In</button>
+            </form>
+            <Link to="/register">
+              Register
+            </Link>
+          </div>
+        </div> : <ErrorMessege setworngRequest={setworngRequest} />
       }
     </>
   )

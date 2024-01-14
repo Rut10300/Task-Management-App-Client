@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react'
 
-function TodoAdd({setaddTodoFlag,saveNewTodo}) {
+export default function TodoAdd({setaddTodoFlag,saveNewTodo}) {
     const todoValues = {
         title: '',
         completed: ''
@@ -19,7 +19,7 @@ function TodoAdd({setaddTodoFlag,saveNewTodo}) {
       e.target.classList.remove("notTouch");
     }
     return (
-        <div style={{ zIndex: "10", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "60vh", right: "40vw", padding: "2vh" }}>
+        <div style={{ zIndex: "10", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "30vh", right: "40vw", padding: "2vh" }}>
             <button onClick={() => {setaddTodoFlag(false); }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
             <h3>Add Todov </h3>
             <label htmlFor="title">Title</label><br />
@@ -32,4 +32,4 @@ function TodoAdd({setaddTodoFlag,saveNewTodo}) {
     );
 }
 
-export default TodoAdd;
+

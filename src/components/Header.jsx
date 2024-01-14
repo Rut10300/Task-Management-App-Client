@@ -1,10 +1,9 @@
 import {  NavLink} from "react-router-dom"
 import '../components/css/header.css'
 export default function Header() {
-    let userName = JSON.parse(localStorage.getItem("currentUser"))?.name??"Guest";
 
     function logout() {
-        localStorage.setItem("currentUser", " ");
+        localStorage.removeItem("currentUser");
     }
     const activeStyle = {
         fontWeight: "bold",
@@ -19,7 +18,7 @@ export default function Header() {
             <NavLink className="navLink" to={`albums`} style={({ isActive }) => isActive ? activeStyle : null}>Albums</NavLink>
             <NavLink className="navLink" to={`posts`} style={({ isActive }) => isActive ? activeStyle : null}>Posts</NavLink>
             <NavLink className="navLink" onClick={() => logout()} to={`/login`} style={({ isActive }) => isActive ? activeStyle : null}>Log Out</NavLink>
-            <h3>hello { userName}</h3>
+            
             </nav>
         </>
     )

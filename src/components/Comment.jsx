@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Routes, Route, NavLink, Link } from "react-router-dom"
-import {putInformetion,deleteInformetion} from '../JS/request'
-export default function Comment({ comment ,setShowComments,deleteFromShowComment}) {
+import { putInformetion, deleteInformetion } from '../JS/request'
+export default function Comment({ comment, setShowComments, deleteFromShowComment }) {
+  let currentUserEmail = JSON.parse(localStorage.getItem("currentUser")).email;
   const [upDate, setUpDate] = useState(false);
   let details = {
     postId: comment.postId,
@@ -29,10 +30,10 @@ export default function Comment({ comment ,setShowComments,deleteFromShowComment
     }
   }
   async function deleteCommentFunc() {
-    let afterDeleteRequ = await deleteInformetion(comment.id,"comments");
+    let afterDeleteRequ = await deleteInformetion(comment.id, "comments");
     if (afterDeleteRequ)
-        deleteFromShowComment(comment.id);
-}
+      deleteFromShowComment(comment.id);
+  }
   return (
     <>
       <h5>Id: {comment.id}</h5>
@@ -42,13 +43,10 @@ export default function Comment({ comment ,setShowComments,deleteFromShowComment
         : <input type="email" name="email" value={content.email} onChange={(e) => { e.preventDefault(); changeContent(e); }} />}
       {!upDate ? <h5>Content: {comment.body}</h5>
         : <input type="text" name="body" value={content.body} onChange={(e) => { e.preventDefault(); changeContent(e); }} />}
-      {!upDate ? <button onClick={(e) => {
+      {comment.email == currentUserEmail && <div>{!upDate ? <button onClick={(e) => {
         setUpDate(true); e.preventDefault();
       }} style={{}}>🖋️</button> : <button onClick={() => updateComment()}>ok</button>}
-      <button onClick={(e) => {
-        e.preventDefault();
-        deleteCommentFunc()
-      }}>🗑️</button>
+        <button onClick={(e) => { e.preventDefault(); deleteCommentFunc() }}>🗑️</button></div>}
     </>
   )
 }

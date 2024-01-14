@@ -4,8 +4,10 @@ import Album from '../Album';
 import AlbumAdd from '../Add/AlbumAdd'
 import AlbumSearch from '../Search/AlbumSearch';
 import { getMoreInformetionAbouteUser,postInformetion } from '../../JS/request'
+import NotFound from '../NotFound';
 let albums = [];
 export default function Albums() {
+  const userDetails = JSON.parse(localStorage.getItem("currentUser"))
   const navigate = useNavigate();
   const [load, setLoad] = useState(true);
   const [wrongRequest, setWrongRequest] = useState(false);
@@ -17,7 +19,6 @@ export default function Albums() {
   useEffect(() => {
     async function fatchData() {
       let albumsRequest = await getMoreInformetionAbouteUser(id, setLoad, setWrongRequest, "albums")
-      console.log(albumsRequest.params);
       albums = albumsRequest.params;
       setShowAlbums(Object.assign(albums));
       setFoundAlbumsFlag(albumsRequest.code == 200 ? true : false);
@@ -68,6 +69,8 @@ export default function Albums() {
 
   return (
     <>
+     {id == userDetails.id ?
+        <> 
       {!wrongRequest ?
         <div style={{ opacity: addAlbumFlag ? "0.2" : "1" }}>
           {!load ?
@@ -99,6 +102,8 @@ export default function Albums() {
       {addAlbumFlag && <AlbumAdd setAddAlbumFlag={setAddAlbumFlag} saveNewAlbum={saveNewAlbum} />}
       {searchAlbumsFlag && <AlbumSearch setSearchAlbumsFlag={setSearchAlbumsFlag}searchParamsAlbum={searchParamsAlbum} searchAlbums={searchAlbums} handleSearchChange={handleSearchChange} />}
       <Outlet/>
+      </> : <NotFound />
+      }
     </>
   )
 }

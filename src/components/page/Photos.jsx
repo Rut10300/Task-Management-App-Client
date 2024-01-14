@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, NavLink, Link, useParams } from "react-router-dom"
-import { getPhotos,postInformetion } from '../JS/request';
-import PhotoAdd from './Add/PhotoAdd';
-import Photo from './Photo';
+import { getPhotos, postInformetion } from '../../JS/request';
+import PhotoAdd from '../Add/PhotoAdd';
+import Photo from '../Photo';
+import NotFound from '../NotFound';
+
 let photos = [];
 let startIndexPhotos = 0;
 let requestMorePhotosFlag = true;
 export default function Photos() {
-
+    const userDetails = JSON.parse(localStorage.getItem("currentUser"))
+    const [noMorePhotoFlag, setNoMorePhotoFlag] = useState(false);
     const numOfPhotosInPage = 5;
     const { albumId } = useParams();
     const [load, setLoad] = useState(true);
@@ -23,8 +26,10 @@ export default function Photos() {
             for (let i = 0; i < photosRequest.params.length; i++) {
                 photos.push(photosRequest.params[i]);
             }
+            if (photosRequest.params.length < numOfPhotosInPage)
+                setNoMorePhotoFlag(true)
             console.log('photos', photos);
-            setShowPhotos(Object.assign(photos));
+            setShowPhotos(pre => pre.concat(photosRequest.params));
         }
         setFoundPhotosFlag(photosRequest.code == 200 ? true : false);
 
@@ -82,36 +87,39 @@ export default function Photos() {
 
     return (
         <>
-            {!wrongRequest ?
-                <div style={{ opacity: addPhotoFlag ? "0.2" : "1" }}>
-                    {!load ?
-                        <div>
-                            <h1>Photos</h1>
-                            <div style={{ display: "flex" }}>
-                                <button onClick={() => setAddPhotoFlag(true)} >➕</button>
-                            </div>
-                            {(!foundPhotosFlag) ? <h2>Not Found </h2>
-                                : showPhotos.map((photo) => {
-                                    return <Photo setLoad={setLoad} key={photo.id} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
-                                })
-                            }
-                            {foundPhotosFlag && <button onClick={(e) => { e.preventDefault(); showMorePhotos() }}>more photos</button>}
-                            {showPhotos.length == 0 && <h3>not found Photos</h3>}
-                        </div>
-                        :
+            {id == userDetails.id ?
+                <>
+                    {!wrongRequest ?
+                        <div style={{ opacity: addPhotoFlag ? "0.2" : "1" }}>
+                            {!load ?
+                                <div>
+                                    <h1>Photos</h1>
+                                    <div style={{ display: "flex" }}>
+                                        <button onClick={() => setAddPhotoFlag(true)} >➕</button>
+                                    </div>
+                                    {(!foundPhotosFlag) ? <h2>Not Found </h2>
+                                        : showPhotos.map((photo) => {
+                                            return <Photo setLoad={setLoad} key={photo.id} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
+                                        })
+                                    }
+                                    {(foundPhotosFlag && !noMorePhotoFlag) && <button onClick={(e) => { e.preventDefault(); showMorePhotos() }}>more photos</button>}
+                                    {showPhotos.length == 0 && <h3>not found Photos</h3>}
+                                </div>
+                                :
+                                <div >
+                                    <h1>Loading...</h1>
+                                </div>}
+                        </div > :
                         <div >
-                            <h1>Loading...</h1>
-                        </div>}
-                </div > :
-                <div >
-                    <h1>something worng...</h1>
-                    <button onClick={() => {
-                        setWrongRequest(false);
-                    }}>try again</button>
-                </div>
+                            <h1>something worng...</h1>
+                            <button onClick={() => {
+                                setWrongRequest(false);
+                            }}>try again</button>
+                        </div>
+                    }
+                    {addPhotoFlag && <PhotoAdd setAddPhotoFlag={setAddPhotoFlag} saveNewPhoto={saveNewPhoto} />}
+                </> : <NotFound />
             }
-            {addPhotoFlag && <PhotoAdd setAddPhotoFlag={setAddPhotoFlag} saveNewPhoto={saveNewPhoto} />}
-
         </>
     )
 }

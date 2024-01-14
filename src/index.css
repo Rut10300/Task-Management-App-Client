@@ -2,11 +2,19 @@
   margin-top: 15vh,auto;
   padding: 0rem;
   text-align: center;
-  background-image: url(./img/backgroond.png);
+  /* background-image: url(./img/backgroond.png);
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;  
+  background-size: cover;   */
 
+}
+html{
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+  background-image: url('/src/img/backgroond.png');
+  background-position: center;
+  width: 100%;
 }
 /*
 .logo {

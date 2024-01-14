@@ -1,32 +1,32 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, useSearchParams, json } from "react-router-dom"
+import { useParams, useNavigate, useSearchParams, json, Outlet } from "react-router-dom"
 import Todo from '../Todo';
+
 import { postInformetion, getMoreInformetionAbouteUser } from '../../JS/request';
 import NotFound from '../NotFound';
 import ErrorMessege from '../ErrorMessege';
 import LoadingMessage from '../LoadingMessage';
 import TodoAdd from '../Add/TodoAdd';
+import TodoSearch from '../Search/TodoSearch';
 let todos = [];
+let optionSort = {
+  alphabetic: (sortTodos) => sortTodos.sort((a, b) => a.title.localeCompare(b.title)),
+  serial: (sortTodos) => sortTodos.sort((a, b) => a.id - b.id),
+  random: (sortTodos) => sortTodos.sort((a, b) => Math.random() - 0.5),
+  completed: (sortTodos) => sortTodos.sort((a, b) => a.completed - b.completed)
+};
 export default function Todos() {
+  const userDetails = JSON.parse(localStorage.getItem("currentUser"))
   const navigate = useNavigate();
   const [searchParamLink, setsearchParamLink] = useSearchParams();
   let typeSort = searchParamLink.get("sort");
-  // const [completed, setCompleted] = useState(false);
   const [load, setLoad] = useState(true);
   const [foundTodoFlag, setFoundTodoFlag] = useState(false);
   const [wrongRequest, setWrongRequest] = useState(false);
   const { id } = useParams();
-  const userDeitels = JSON.parse(localStorage.getItem("currentUser"))
   const [searchTodoFlag, setsearchTodoFlag] = useState(false);
   const [addTodoFlag, setaddTodoFlag] = useState(false);
   const [showTodos, setShowTodos] = useState([{}, {}]);
-
-  let optionSort = {
-    alphabetic: (sortTodos) => sortTodos.sort((a, b) => a.title.localeCompare(b.title)),
-    serial: (sortTodos) => sortTodos.sort((a, b) => a.id - b.id),
-    random: (sortTodos) => sortTodos.sort((a, b) => Math.random() - 0.5),
-    completed: (sortTodos) => sortTodos.sort((a, b) => a.completed - b.completed)
-  };
 
   function sortedChange(e) {
     navigate(`?sort=${e.target.value}`);
@@ -34,7 +34,6 @@ export default function Todos() {
     setShowTodos(temp);
 
   }
-
 
   useEffect(() => {
     async function fatchData() {
@@ -83,14 +82,11 @@ export default function Todos() {
     completed: ""
   }
   const [searchParams, setSearchParams] = useState(searchValues);
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    let { name, value } = e.target;
+  const handleSearchChange = (value,name) => {
     setSearchParams({
       ...searchParams,
       [name]: value
     })
-    e.target.classList.remove("notTouch");
   }
   function searchTodos() {
     typeSort = searchParamLink.get("sort");
@@ -128,7 +124,7 @@ export default function Todos() {
 
   return (
     <>
-      {id == userDeitels.id ?
+      {id == userDetails.id ?
         <>  {!wrongRequest ?
           <div style={{ opacity: addTodoFlag ? "0.2" : "1" }}>
             {!load ?
@@ -141,42 +137,28 @@ export default function Todos() {
                     <option value="alphabetic">Alphabetic</option>
                     <option value="completed">Completed</option>
                   </select>
-                  <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>
-                  <button onClick={() => setaddTodoFlag(true)} >➕</button>
-                  <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
+                  <div className='option'>
+                    <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>
+                    <button onClick={() => setaddTodoFlag(true)} >➕</button>
+                    <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
+                  </div>
                 </div>
-                {(!foundTodoFlag) ? <h2>Not Found </h2> :<div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>{ showTodos.map((todo) => {
-                  return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} style={{boxSizing:"border-box"}} />})}
-                  </div>}
+                {(!foundTodoFlag) ? <h2>Not Found </h2> : <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>{showTodos.map((todo) => {
+                  return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} style={{ boxSizing: "border-box" }} />
+                })}
+                </div>}
                 {showTodos.length == 0 && <h3>not found todos</h3>}
               </div>
               : <LoadingMessage />}
           </div > :
-          <ErrorMessege />
+          <ErrorMessege  setWrongRequest={setWrongRequest}/>
         }
-          {addTodoFlag ?? <TodoAdd setaddTodoFlag={setaddTodoFlag} saveNewTodo={saveNewTodo} />}
-          {searchTodoFlag && <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "30vh", right: "40vw", padding: "2vh" }}>
-            <button onClick={() => {
-              setsearchTodoFlag(false);
-            }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
-            <h3>search Task</h3>
-            <label htmlFor="taskId">Task Id</label><br />
-            <input id="taskId" className='notTouch' name="taskId" value={searchParams.taskId} onChange={(e) => handleSearchChange(e)} type="number" placeholder="12" min="1" /><br />
-            <label htmlFor="title">Title</label><br />
-            <input id="title" className='notTouch' name="title" value={searchParams.title} type="text" required onChange={(e) => handleSearchChange(e)} /><br />
-            <label htmlFor="completed">Completed</label><br />
-            <input type="text" name="completed" value={searchParams.completed} placeholder='yes / no' onChange={(e) => handleSearchChange(e)} /><br />
-            <button type="sumbit" id='submitButton' className='submit'
-              onClick={(e) => {
-                e.preventDefault();
-                searchTodos();
-                setsearchTodoFlag(false);
-              }}>search</button>
-          </div>
-          }
+          {addTodoFlag &&<TodoAdd setaddTodoFlag={setaddTodoFlag} saveNewTodo={saveNewTodo} />}
+          {searchTodoFlag && <TodoSearch setsearchTodoFlag={setsearchTodoFlag} searchTodos={searchTodos}handleSearchChange={handleSearchChange}searchParams={searchParams}/> }
         </> : <NotFound />
       }
 
+      <Outlet />
     </>
   )
 }

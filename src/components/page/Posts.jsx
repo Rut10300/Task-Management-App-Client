@@ -3,9 +3,10 @@ import { useParams, useLocation, useNavigate } from "react-router-dom"
 import { getMoreInformetionAbouteUser, postInformetion } from '../../JS/request';
 import Post from '../Post';
 import Todos from './Todos';
-
+import NotFound from '../NotFound'
 let posts = [];
 export default function Posts() {
+  const userDetails = JSON.parse(localStorage.getItem("currentUser"))
   const navigate = useNavigate();
   const [load, setLoad] = useState(true);
   const [wrongRequest, setWrongRequest] = useState(false);
@@ -110,6 +111,8 @@ export default function Posts() {
   }
   return (
     <>
+     {id == userDetails.id ?
+     <>
       {!wrongRequest ?
         <div style={{ opacity: addPost ? "0.2" : "1" }}>
           {!load ?
@@ -150,10 +153,7 @@ export default function Posts() {
           <label htmlFor="body">Body</label><br />
           <input id="body" className='notTouch' name="body" type="text" required onChange={(e) => handleInputChange(e)} /><br />
           <button type="sumbit" id='submitButton' className='submit'
-            onClick={(e) => {
-              e.preventDefault();
-              saveDetails();
-            }}>Add</button>
+            onClick={(e) => { e.preventDefault(); saveDetails(); }}>Add</button>
         </div>
       }
 
@@ -176,7 +176,10 @@ export default function Posts() {
 
         </div>
       }
+         </> : <NotFound />
+      }
     </>
+    
   )
 }
 

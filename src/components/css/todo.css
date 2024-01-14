@@ -2,8 +2,7 @@
     border: 2px solid black;
     width: 22vw;
     height: 40vh;
-    background-color: rgb(188, 241, 245);
-  
+
     display: flex;
     margin: 2px;
     padding: 3px;
@@ -11,14 +10,32 @@
     flex-direction: column;
     justify-content: "space-between";
     align-items: center;
-    
+    box-shadow: 0 0.1rem 1.5rem rgb(169, 230, 243);
+
+
 }
-.buttons{
+
+.buttons {
     justify-content: "space-between";
     display: flex;
+    margin: auto;
 }
-#checked{
-    width: 2vw;
-    height: 2vw;
+
+#checked {
+    width: 1vw;
+    height: 1vw;
     margin: 1vh;
+}
+
+.inputUpdat {
+    text-align: center;
+    padding: 0;
+    height: 17vh;
+    width: 20vw;
+    background-color: rgb(188, 241, 245);
+}
+
+.pUpdate {
+    height: 10vh;
+    width: 10vw;
 }

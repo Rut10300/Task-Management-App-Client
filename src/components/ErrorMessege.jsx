@@ -1,10 +1,10 @@
 import React from 'react';
 
-function ErrorMessege({setworngRequest}) {
+function ErrorMessege({setWrongRequest}) {
   return (
     <div >
           <h1>something worng...</h1>
-          <button onClick={() => { setworngRequest(false) }}>try again</button>
+          <button onClick={() => { setWrongRequest(false) }}>try again</button>
         </div>
   );
 }

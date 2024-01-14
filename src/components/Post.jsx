@@ -18,10 +18,10 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     title: post.title,
     body: post.body
   };
-  useEffect(() => {
-    if (activePost)
-      getAllComments();
-  }, [])
+  // useEffect(() => {
+  //   if (activePost)
+  //     getAllComments();
+  // }, [])
 
 
   const changeContent = (e) => {
@@ -33,10 +33,20 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     e.target.classList.remove("notTouch");
   }
   const [content, setContent] = useState(details);
+
   async function deletePostFunc() {
     let afterDeleteRequ = await deleteInformetion(post.id, "posts");
     if (afterDeleteRequ)
+    {
       deleteFromPosts(post.id);
+      let afterGetComments = await getCommentsFromServer(post.id);
+      if (afterGetComments.code == 200) {
+        afterGetComments.params.forEach(async(element) => {
+          let afterDeleteComment=await deleteInformetion(element.id,'comments');
+        });
+      }
+
+    }
   }
 
   function updatePost() {

@@ -10,7 +10,7 @@ export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
         e.preventDefault();
         let { name, value } = e.target;
         if (name == "completed") {
-           value=e.target.checked
+            value = e.target.checked
             Changechecked();
         }
         setaddTodoParams({
@@ -19,9 +19,9 @@ export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
         })
 
     }
-  async  function Changechecked() {
+    async function Changechecked() {
         let updateTodo = { id: todo.id, title: addTodoParams.title, completed: !addTodoParams.completed, userId: todo.userId }
-        let afterPutTodo =await putInformetion(todo.id, updateTodo, setLoad, "todos");
+        let afterPutTodo = await putInformetion(todo.id, updateTodo, setLoad, "todos");
         if (afterPutTodo)
             setTodos(todo.id, updateTodo);
     }
@@ -35,7 +35,7 @@ export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
             userId: todo.userId,
             id: todo.id,
             title: addTodoParams.title,
-            completed:  addTodoParams.completed
+            completed: addTodoParams.completed
         };
         let afterPutTodo = putInformetion(todo.id, updatetodo, setLoad, "todos");
         if (afterPutTodo) {
@@ -45,18 +45,18 @@ export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
     }
     return (
         <>
-            <form  style={{width:"12vw"}}>
+            <form style={{ width: "12vw" }}>
                 <div className='todo'>
-                <p>{todo.id}</p>
-                {!upDate ? <p >{todo.title}</p> : <input type="text" name="title" value={addTodoParams.title} onChange={(e) => handleTodoChange(e)} />}
-                <input id="checked" type="checkbox" checked={addTodoParams.completed}  name="completed" onChange={(e) => handleTodoChange(e)} />
-                <div className='buttons'>{!upDate ? <button  onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> 
-                : <button onClick={(e) => { updateTodoTitle(); e.preventDefault(); }}>ok</button>}
-                <button onClick={(e) => {  e.preventDefault();  deleteTodoFunc()  }}>🗑️</button>
-                </div>
+                    <p>id:{todo.id}</p>
+                    {!upDate ? <p className='pUpdate' >{todo.title}</p> : <textarea type="text" name="title" className='inputUpdat' value={addTodoParams.title} onChange={(e) => handleTodoChange(e)} />}
+                    <input id="checked" type="checkbox" checked={addTodoParams.completed} name="completed" onChange={(e) => handleTodoChange(e)} />
+                    <div className='buttons' style={{ display: "flex", justifyContent: "center" }}>{!upDate ? <button onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button>
+                        : <button onClick={(e) => { updateTodoTitle(); e.preventDefault(); }}>ok</button>}
+                        <button onClick={(e) => { e.preventDefault(); deleteTodoFunc() }}>🗑️</button>
+                    </div>
                 </div>
             </form>
-            
+
         </>
     )
 }
