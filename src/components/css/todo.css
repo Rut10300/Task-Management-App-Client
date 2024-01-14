@@ -1,8 +1,9 @@
 .todo {
     border: 2px solid black;
-
-    width: 15vw;
-    height: 35vh;
+    width: 22vw;
+    height: 40vh;
+    background-color: rgb(188, 241, 245);
+  
     display: flex;
     margin: 2px;
     padding: 3px;

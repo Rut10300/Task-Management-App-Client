@@ -145,8 +145,8 @@ export default function Todos() {
                   <button onClick={() => setaddTodoFlag(true)} >➕</button>
                   <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
                 </div>
-                {(!foundTodoFlag) ? <h2>Not Found </h2> :<div style={{display:"flex" ,flexWrap:"wrap" ,width:"100vw"}}>{ showTodos.map((todo) => {
-                  return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} style={{ flex: "0 0 25%", boxSizing: "border-box", padding: "5px" }} />})}
+                {(!foundTodoFlag) ? <h2>Not Found </h2> :<div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>{ showTodos.map((todo) => {
+                  return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} style={{boxSizing:"border-box"}} />})}
                   </div>}
                 {showTodos.length == 0 && <h3>not found todos</h3>}
               </div>
