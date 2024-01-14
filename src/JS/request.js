@@ -165,9 +165,9 @@ export async function postInformetion(informetion, setLoad, typeInformetion) {
     }
 }
 
-export async function getCommentsFromServer(id) {
+export async function getCommentsFromServer(id, setLoad) {
     try {
-
+        setLoad(true)
         const response = await fetch(`http://localhost:3000/comments?postId=${id}`);
         if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -175,13 +175,14 @@ export async function getCommentsFromServer(id) {
         }
         const promiseData = await response.json();
         let data = promiseData;
-
+        setLoad(false)
         if (data == null) {
             return { code: 300, message: "NotFound", params: null };
         }
         return { code: 200, message: "ok", params: data };
     }
     catch (error) {
+        setLoad(false)
 
         return { code: 100, message: error, params: null };
     }

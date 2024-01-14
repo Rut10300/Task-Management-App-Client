@@ -3,49 +3,45 @@ import { Routes, Route, NavLink, Link, useNavigate, useSearchParams } from "reac
 import { deleteInformetion, postInformetion, putInformetion, getCommentsFromServer } from '../JS/request'
 import Comment from './Comment';
 import { useEffect } from 'react';
+import CommentAdd from './Add/CommentAdd';
+import LoadingMessage from './LoadingMessage';
 
 export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
   const navigate = useNavigate();
+  const [loadComments,setLoadComments]=useState(false)
   const [searchParam, setSearchParam] = useSearchParams();
-  const [addComment, setAddComment] = useState(false);
-  const [seeAllComments, setSeeAllComents] = useState(false);
+  const [addCommentFlag, setaddCommentFlag] = useState(false);
+  const [seeAllCommentsFlag, setSeeAllComentsFlag] = useState(false);
   const [notFoundComments, setNotFoundComments] = useState(false);
   const [showComments, setShowComments] = useState([]);
   let selectedPost = searchParam.get("post");
   let activePost = selectedPost == post.id;
-  const [upDate, setUpDate] = useState(false);
-  let details = {
+  const [upDateFlag, setUpDateFlag] = useState(false);
+  let detailsPostUpdate = {
     title: post.title,
     body: post.body
   };
-  // useEffect(() => {
-  //   if (activePost)
-  //     getAllComments();
-  // }, [])
+  const [contentPostUpdate, setContentPostUpdate] = useState(detailsPostUpdate);
 
-
-  const changeContent = (e) => {
+  const changeContentPostUpdate = (e) => {
     const { name, value } = e.target
-    setContent({
-      ...content,
+    setContentPostUpdate({
+      ...contentPostUpdate,
       [name]: value
     })
     e.target.classList.remove("notTouch");
   }
-  const [content, setContent] = useState(details);
 
   async function deletePostFunc() {
     let afterDeleteRequ = await deleteInformetion(post.id, "posts");
-    if (afterDeleteRequ)
-    {
+    if (afterDeleteRequ) {
       deleteFromPosts(post.id);
       let afterGetComments = await getCommentsFromServer(post.id);
       if (afterGetComments.code == 200) {
-        afterGetComments.params.forEach(async(element) => {
-          let afterDeleteComment=await deleteInformetion(element.id,'comments');
+        afterGetComments.params.forEach(async (element) => {
+          let afterDeleteComment = await deleteInformetion(element.id, 'comments');
         });
       }
-
     }
   }
 
@@ -53,37 +49,27 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     let postToUpdate = {
       userId: post.userId,
       id: post.id,
-      title: content.title,
-      body: content.body
+      title: contentPostUpdate.title,
+      body: contentPostUpdate.body
     };
     let afterPutPost = putInformetion(post.id, postToUpdate, setLoad, "posts");
-
     if (afterPutPost) {
       setPosts(post.id, postToUpdate);
-      setUpDate(false);
+      setUpDateFlag(false);
     }
   }
   async function getAllComments() {
-    let afterGetComments = await getCommentsFromServer(post.id);
+    let afterGetComments = await getCommentsFromServer(post.id,setLoadComments);
     if (afterGetComments.code == 200) {
       setShowComments(Object.assign(afterGetComments.params));
-      console.log(afterGetComments.params);
     }
     else {
       setNotFoundComments(true);
     }
   }
-  const [commentDetails, setCommentDetails] = useState({ name: "", email: "", body: "" });
-  const handleCommentChange = (e) => {
-    let { name, value } = e.target;
-    setCommentDetails({
-      ...commentDetails,
-      [name]: value
-    })
-    e.target.classList.remove("notTouch");
-  }
 
-  async function saveCommentDetails() {
+
+  async function saveNewCommentDetails(commentDetails) {
     let commentData = {
       postId: post.id,
       name: commentDetails.name,
@@ -92,27 +78,23 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     }
     let afterPostComment = await postInformetion(commentData, setLoad, "comments");
     if (afterPostComment.code == 200) {
-      setAddComment(false);
+      setaddCommentFlag(false);
       let upDate = Array.from(showComments);
       let newComment = Object.assign(afterPostComment.params);
       upDate = [...upDate, newComment];
       setShowComments(upDate);
-
     }
   }
 
   function upDateShowComments(id, commentToUpdate) {
     let temp = showComments.map((comment) => {
       if (comment.id == id) {
-        console.log(commentToUpdate);
-        // let newComment = Object.assign(commentToUpdate);
         return commentToUpdate;
       }
       else
         return Object.assign(comment);
     }
     )
-    console.log(temp);
     setShowComments(Object.assign(temp))
   }
   function deleteFromShowComment(id) {
@@ -120,74 +102,48 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     let upDate = [...showComments];
     upDate.splice(index, 1);
     setShowComments([...upDate]);
-
-
   }
 
 
   return (
     <>
-      {activePost && <button onClick={() => setAddComment(true)}>Add Comment</button>}
+      {activePost &&
+       <button onClick={() => setaddCommentFlag(true)}>Add Comment</button>}
       <h3 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Post id: {post.id}</h3>
-      {!upDate ? <h4 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Title: {post.title}</h4>
-        : <input type="text" name="title" value={content.title} onChange={(e) => {
-          e.preventDefault();
-          changeContent(e);
-        }} />}
+      {!upDateFlag ? <h4 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Title: {post.title}</h4>
+        : <input type="text" name="title" value={contentPostUpdate.title} onChange={(e) => { e.preventDefault(); changeContentPostUpdate(e); }} />}
       {activePost && <div>
-        {!upDate ? <h4 style={{ fontWeight: "bold" }}>Body: {post.body}</h4>
-          : <input type="text" name="body" value={content.body} onChange={(e) => {
+        {!upDateFlag ? <h4 style={{ fontWeight: "bold" }}>Body: {post.body}</h4>
+          : <input type="text" name="body" value={contentPostUpdate.body} onChange={(e) => {
             e.preventDefault();
-            changeContent(e);
-          }} />}
-
-
-      </div>}
-      {!upDate ? <button onClick={(e) => {
-        setUpDate(true); e.preventDefault();
-      }} style={{}}>🖋️</button> : <button onClick={() => updatePost()}>ok</button>}
-      <button onClick={(e) => {
-        e.preventDefault();
-        deletePostFunc();
-      }}>🗑️</button>
-      {activePost && seeAllComments && <div>{(!notFoundComments) ? <div>
+            changeContentPostUpdate(e);
+          }} />}  
+       </div>}
+      {!upDateFlag ?
+        <button onClick={(e) => {  setUpDate(true); e.preventDefault(); }} >🖋️</button> 
+       : <button onClick={() => updatePost()}>ok</button>}
+      <button onClick={(e) => { e.preventDefault(); deletePostFunc();}}>🗑️</button>
+      {activePost && seeAllCommentsFlag && loadComments &&<LoadingMessage setLoad={setLoadComments}/>}
+      {activePost && seeAllCommentsFlag && <div>{(!notFoundComments) ? <div>
         {showComments.map((comment) => { return <Comment key={comment.id} deleteFromShowComment={deleteFromShowComment} setShowComments={upDateShowComments} comment={comment} /> })}
-      </div> : <h4>Not found comments</h4>}
+      </div> :
+     <h4>Not found comments</h4>}
       </div>}
-      {activePost && <div>{!seeAllComments ? <button onClick={(e) => {
-        {
-          e.preventDefault();
-          setSeeAllComents(true);
+      {activePost && <div>{!seeAllCommentsFlag ? <button onClick={(e) => {
+        {  e.preventDefault();
+          setSeeAllComentsFlag(true);
           getAllComments();
         }
       }}>Comments</button> :
-        <button onClick={(e) => { e.preventDefault(); setSeeAllComents(false); }}>Close Comments</button>}
+        <button onClick={(e) => { e.preventDefault(); setSeeAllComentsFlag(false); }}>Close Comments</button>}
       </div>
       }
       {!activePost ? <button onClick={() => {
         navigate(`?post=${post.id}`)
       }}>More aboute me</button> :
         <button onClick={() => navigate('.')}>Less information</button>}
+      {addCommentFlag &&<CommentAdd saveNewCommentDetails={saveNewCommentDetails} setaddCommentFlag={setaddCommentFlag}/>  }
 
-      {addComment &&
-        <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "60vh", right: "40vw", padding: "2vh" }}>
-          <button onClick={() => {
-            setAddComment(false);
-          }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
-          <h3>Add Comment</h3>
-          <label htmlFor="name">Name</label><br />
-          <input id="name" className='notTouch' value={commentDetails.name} name="name" type="text" required onChange={(e) => handleCommentChange(e)} /><br />
-          <label htmlFor="email">Email</label><br />
-          <input id="email" className='notTouch' value={commentDetails.email} name="email" type="email" onChange={(e) => handleCommentChange(e)} placeholder='israel@gmail.com' /><br />
-          <label htmlFor="body">Body</label><br />
-          <input id="body" className='notTouch' value={commentDetails.body} name="body" type="text" required onChange={(e) => handleCommentChange(e)} /><br />
-          <button type="sumbit" id='submitButton' className='submit'
-            onClick={(e) => {
-              e.preventDefault();
-              saveCommentDetails();
-            }}>Add</button>
-        </div>
-      }
     </>
   )
 }
