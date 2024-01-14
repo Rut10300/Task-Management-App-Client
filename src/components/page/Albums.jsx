@@ -82,8 +82,8 @@ export default function Albums() {
                 <div>
                   <h1 style={{color:"#FBB040",fontSize:"35px"}}>Albums</h1>
                   <div id="lineButtons" style={{ display: "flex" }}>
-                    <button id="badd" onClick={() => setAddAlbumFlag(true)} >➕</button>
-                    <button id="bsearch"onClick={() => setSearchAlbumsFlag(true)}>🔍</button>
+                    <button className="buttonSearchAdd" onClick={() => setAddAlbumFlag(true)} >➕</button>
+                    <button className="buttonSearchAdd"onClick={() => setSearchAlbumsFlag(true)}>🔍</button>
                     {(searchParamsAlbum.id != "" || searchParamsAlbum.title != "") && <button onClick={() => { setShowAlbums(albums); setSearchParamsAlbum(valuesSearchAlbum) }}>Clear filter</button>}
                   </div>
                   {(!foundAlbumsFlag) ? <h2>Not Found </h2>

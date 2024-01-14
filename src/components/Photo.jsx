@@ -41,9 +41,9 @@ export default function Photo({ setLoad, photo, updateShowPhotos, deleteFromShow
             {!upDate ? <p>title: {photo.title}</p> : <input type="text" name="title" value={updatePhotoDetails.title} onChange={(e) => handleUpdatePhotoChange(e)} />}
             {!upDate ? <p>url: {photo.url}</p> : <input type="text" name="url" value={updatePhotoDetails.url} onChange={(e) => handleUpdatePhotoChange(e)} />}
             <img src={photo.thumbnailUrl} alt="" />
-            {!upDate ? <button onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> :
+            {!upDate ? <button className="buttonSearchAdd" onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> :
                 <button onClick={(e) => { updatePhoto(); e.preventDefault(); }}>ok</button>}
-            <button onClick={(e) => { e.preventDefault(); deletePhoto() }}>🗑️</button>
+            <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deletePhoto() }}>🗑️</button>
         </>
     )
 }

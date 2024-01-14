@@ -139,8 +139,8 @@ export default function Todos() {
                   </select>
                   <div className='option'>
                     {(searchParams.taskId != "" || searchParams.title != "" || searchParams.completed != "") && <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>}
-                    <button onClick={() => setaddTodoFlag(true)} >➕</button>
-                    <button onClick={() => setsearchTodoFlag(true)}>🔍</button>
+                    <button  className="buttonSearchAdd"onClick={() => setaddTodoFlag(true)} >➕</button>
+                    <button className="buttonSearchAdd"onClick={() => setsearchTodoFlag(true)}>🔍</button>
                   </div>
                 </div>
                 {(!foundTodoFlag) ? <h2>Not Found </h2> : <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>{showTodos.map((todo) => {

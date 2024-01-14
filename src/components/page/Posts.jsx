@@ -103,8 +103,8 @@ export default function Posts() {
               <h1>Posts</h1>
               <div style={{ display: "flex" }}>
              { (searchParamsPost.id!=""||searchParamsPost.title!="")&& <button onClick={() => { setShowPosts(posts);setSearchParamsPost(searchValuesPost)  }}>Clear filter</button>}
-                <button onClick={() => setAddPostFlag(true)} >➕</button>
-                <button onClick={() => setSearchPostFlag(true)}>🔍</button>
+                <button className="buttonSearchAdd" onClick={() => setAddPostFlag(true)} >➕</button>
+                <button className="buttonSearchAdd" onClick={() => setSearchPostFlag(true)}>🔍</button>
               </div>
               {(!foundPostsFlag) ? <h2>Not Found </h2>
                 : showPosts.map((post1) => {

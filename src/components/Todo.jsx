@@ -50,9 +50,9 @@ export default function Todo({ todo, setTodos, deleteFromTodos, setLoad }) {
                     <p>id:{todo.id}</p>
                     {!upDate ? <p className='pUpdate' >{todo.title}</p> : <textarea type="text" name="title" className='inputUpdat' value={addTodoParams.title} onChange={(e) => handleTodoChange(e)} />}
                     <input id="checked" type="checkbox" checked={addTodoParams.completed} name="completed" onChange={(e) => handleTodoChange(e)} />
-                    <div className='buttons' style={{ display: "flex", justifyContent: "center" }}>{!upDate ? <button onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button>
+                    <div className='buttons' style={{ display: "flex", justifyContent: "center" }}>{!upDate ? <button className="buttonSearchAdd" onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button>
                         : <button onClick={(e) => { updateTodoTitle(); e.preventDefault(); }}>ok</button>}
-                        <button onClick={(e) => { e.preventDefault(); deleteTodoFunc() }}>🗑️</button>
+                        <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deleteTodoFunc() }}>🗑️</button>
                     </div>
                 </div>
             </form>

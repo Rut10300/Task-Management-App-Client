@@ -4,6 +4,8 @@ import { getPhotos, postInformetion } from '../../JS/request';
 import PhotoAdd from '../Add/PhotoAdd';
 import Photo from '../Photo';
 import NotFound from '../NotFound';
+import LoadingMessage from '../LoadingMessage';
+import ErrorMessege from '../ErrorMessege';
 
 let photos = [];
 let startIndexPhotos = 0;
@@ -93,7 +95,7 @@ export default function Photos() {
                                 <div>
                                     <h1>Photos</h1>
                                     <div style={{ display: "flex" }}>
-                                        <button onClick={() => setAddPhotoFlag(true)} >➕</button>
+                                        <button className="buttonSearchAdd" onClick={() => setAddPhotoFlag(true)} >➕</button>
                                     </div>
                                     {(!foundPhotosFlag) ? <h2>Not Found </h2>
                                         : showPhotos.map((photo) => {
@@ -105,14 +107,12 @@ export default function Photos() {
                                 </div>
                                 :
                                 <div >
-                                    <h1>Loading...</h1>
+                                    <LoadingMessage/>
                                 </div>}
                         </div > :
                         <div >
-                            <h1>something worng...</h1>
-                            <button onClick={() => {
-                                setWrongRequest(false);
-                            }}>try again</button>
+                            <ErrorMessege setWrongRequest={setWrongRequest}/>
+                            
                         </div>
                     }
                     {addPhotoFlag && <PhotoAdd setAddPhotoFlag={setAddPhotoFlag} saveNewPhoto={saveNewPhoto} />}

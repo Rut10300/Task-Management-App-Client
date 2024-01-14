@@ -120,9 +120,9 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
           }} />}  
        </div>}
       {!upDateFlag ?
-        <button onClick={(e) => {  setUpDateFlag(true); e.preventDefault(); }} >🖋️</button> 
+        <button className="buttonSearchAdd" onClick={(e) => {  setUpDateFlag(true); e.preventDefault(); }} >🖋️</button> 
        : <button onClick={() => updatePost()}>ok</button>}
-      <button onClick={(e) => { e.preventDefault(); deletePostFunc();}}>🗑️</button>
+      <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deletePostFunc();}}>🗑️</button>
       {activePost && seeAllCommentsFlag && loadComments &&<LoadingMessage setLoad={setLoadComments}/>}
       {activePost && seeAllCommentsFlag && <div>{(!notFoundComments) ? <div>
         {showComments.map((comment) => { return <Comment key={comment.id} deleteFromShowComment={deleteFromShowComment} setShowComments={upDateShowComments} comment={comment} /> })}

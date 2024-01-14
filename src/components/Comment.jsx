@@ -43,10 +43,10 @@ export default function Comment({ comment, setShowComments, deleteFromShowCommen
         : <textarea type="email" name="email" value={paramsCommentUpdate.email} onChange={(e) => { e.preventDefault(); changeCommentUpdate(e); }} />}
       {!upDate ? <h5>Content: {paramsCommentUpdate.body}</h5>
         : <textarea type="text" name="body" value={paramsCommentUpdate.body} onChange={(e) => { e.preventDefault(); changeCommentUpdate(e); }} />}
-      {comment.email == currentUserEmail && <div>{!upDate ? <button onClick={(e) => {
+      {comment.email == currentUserEmail && <div>{!upDate ? <button className="buttonSearchAdd" onClick={(e) => {
         setUpDate(true); e.preventDefault();
       }} style={{}}>🖋️</button> : <button onClick={() => updateComment()}>ok</button>}
-        <button onClick={(e) => { e.preventDefault(); deleteCommentFunc() }}>🗑️</button></div>}
+        <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deleteCommentFunc() }}>🗑️</button></div>}
     </>
   )
 }
