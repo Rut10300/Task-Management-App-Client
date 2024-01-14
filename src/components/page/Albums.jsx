@@ -4,6 +4,7 @@ import Album from '../Album';
 import AlbumAdd from '../Add/AlbumAdd'
 import AlbumSearch from '../Search/AlbumSearch';
 import { getMoreInformetionAbouteUser,postInformetion } from '../../JS/request'
+import LoadingMessage from '../LoadingMessage';
 import NotFound from '../NotFound';
 let albums = [];
 export default function Albums() {
@@ -89,7 +90,7 @@ export default function Albums() {
             </div>
             :
             <div >
-              <h1>Loading...</h1>
+              <LoadingMessage/>
             </div>}
         </div > :
         <div >

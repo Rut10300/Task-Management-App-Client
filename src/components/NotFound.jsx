@@ -5,9 +5,8 @@ export default function NotFound() {
  
   return (
     <>
-    <div style={{height:"95vh"}}>
-    <h1 style={{margin:"5vh"}}>Not found page</h1>
-    <h1>404</h1>
+    <div style={{backgroundImage: "url(./img/404.png)"}}>
+    <img style={{height:"95vh",width:"40vw"}} src="\img\404.png"  alt="" />
     </div>
 
     </>
