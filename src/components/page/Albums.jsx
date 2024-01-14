@@ -80,7 +80,7 @@ export default function Albums() {
             <div style={{ opacity: addAlbumFlag ? "0.2" : "1" }}>
               {!load ?
                 <div>
-                  <h1>Albums</h1>
+                  <h1 style={{color:"#FBB040",fontSize:"35px"}}>Albums</h1>
                   <div id="lineButtons" style={{ display: "flex" }}>
                     <button id="badd" onClick={() => setAddAlbumFlag(true)} >➕</button>
                     <button id="bsearch"onClick={() => setSearchAlbumsFlag(true)}>🔍</button>

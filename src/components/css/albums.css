@@ -7,10 +7,13 @@
 }
 #badd{
     margin: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 90%;
 }
 
 #bsearch{
     margin: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 #linkAlbum{
@@ -18,9 +21,10 @@
 }
 
 #album{
-    border: 2px solid black;
-    width: 22vw;
-    height: 40vh;
+    border: 2px solid #79D3E7;
+    color: black;
+    width: 20vw;
+    height: 20vh;
     display: flex;
     margin: 2px;
     padding: 3px;
@@ -28,8 +32,12 @@
     flex-direction: column;
     justify-content: "space-between";
     align-items: center;
-    box-shadow: 0 0.1rem 1.5rem rgb(169, 230, 243);
+    /* box-shadow: 0 0.1rem 1.5rem rgb(169, 230, 243); */
 
+}
+
+#idAlbun{
+    color: #FBB040;
 }
 #allAlbums{
 display: grid;

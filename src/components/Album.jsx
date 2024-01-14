@@ -6,7 +6,7 @@ export default function Album({ album,  setLoad }) {
   return (
     <>
     <div id="album">
-        <h3>{album.id}</h3>
+        <h3 id="idAlbun">{album.id}</h3>
         <h4>{album.title}</h4>
     </div>
     
