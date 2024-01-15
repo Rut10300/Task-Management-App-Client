@@ -163,3 +163,7 @@ button:focus-visible {
 
 
 }
+.allco{
+  max-height: 250px;
+overflow-y: auto;
+}

@@ -34,8 +34,8 @@
     background-color: #79D3E7;
     position: absolute;
     border: 2px solid black;
-    height: 70vh;
-    top: 20vh;
+    height: 120vh;
+    top: 10vh;
     right: 38vw;
     padding: 2vh;
 }
@@ -48,10 +48,9 @@
     padding: 0;
     height: 100%;
     width: 100%;
-    margin-bottom: 5%;
+  
     text-align: center;
     position: relative;
-    rows: 2px;
     /* top:10vh; */
 }
 

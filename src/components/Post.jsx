@@ -115,11 +115,11 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
         {activePost &&
           <button onClick={() => setaddCommentFlag(true)}>Add Comment</button>}
         <div id="post">
-          <h3 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Post {post.id}</h3>
-          {!upDateFlag ? <h4 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Title:<br></br> {post.title}</h4>
+          <h4 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Post {post.id}</h4>
+          {!upDateFlag ? <p style={{ fontWeight: !activePost ? "normal" : "bold" }}>Title:{post.title}</p>
             : <textarea  id="titleArea"  type="text" name="title" value={contentPostUpdate.title} onChange={(e) => { e.preventDefault(); changeContentPostUpdate(e); }} />}
           {activePost && <div>
-            {!upDateFlag ? <h4 style={{ fontWeight: "bold" }}>Body: <br></br>{post.body}</h4>
+            {!upDateFlag ? <p style={{ fontWeight: "bold" }}>Body: {post.body}</p>
               : <textarea id="bodyArea" type="text" name="body" value={contentPostUpdate.body} onChange={(e) => {
                 e.preventDefault();
                 changeContentPostUpdate(e);
@@ -133,7 +133,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
             <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deletePostFunc(); }}>🗑️</button>
           </div>
           {activePost && seeAllCommentsFlag && loadComments && <LoadingMessage setLoad={setLoadComments} />}
-          {activePost && seeAllCommentsFlag && <div>{(!notFoundComments) ? <div>
+          {activePost && seeAllCommentsFlag && <div>{(!notFoundComments) ? <div className='allco'>
             {showComments.map((comment) => { return <Comment key={comment.id} deleteFromShowComment={deleteFromShowComment} setShowComments={upDateShowComments} comment={comment} /> })}
           </div> :
             <h4>Not found comments</h4>}
