@@ -1,0 +1,43 @@
+#allPhotos{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+}
+.photo{
+    border: 2px solid #79D3E7;
+    color: black;
+    width: 22vw;
+    height: 45vh;
+    display: flex;
+    margin: 2px;
+    padding: 3px;
+    font-size: 5px sans-serif;
+    flex-direction: column;
+    justify-content: "space-between";
+    align-items: center;
+}
+.photo p {
+    margin: 0; /* Remove default margin for paragraphs */
+  }
+   .photo textarea{
+    margin-bottom: 5px;
+    width: 100%; /* Make textareas take up full width */
+    height: 100%;
+  }
+
+  .photo input {
+    margin-bottom: 5px; /* Add spacing for input fields */
+  }
+  
+  .photo img {
+    top: 2vh;
+    position: relative;
+    max-width: 50%; /* Make the image fill the container */
+    max-height: 50%; /* Limit the height to 60% of the container */
+    object-fit: cover; /* Maintain the image's aspect ratio while covering the container */
+    margin-bottom: 5px; /* Add spacing below the image */
+  }
+  
+  
+  
+ 

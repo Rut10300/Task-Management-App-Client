@@ -88,7 +88,7 @@ export default function Albums() {
                   </div>
                   {(!foundAlbumsFlag) ? <h2>Not Found </h2>
                     :<div id="allAlbums" >{ showAlbums.map((album) => {
-                      return <Link id="link" to={`${album.id}/photos`}><Album setLoad={setLoad} key={album.id} album={album} /></Link>
+                      return <Link id="link" to={`${album.id}/photos`}><Album setLoad={setLoad} key={album.id*Math.random()} album={album} /></Link>
                     })}</div>}
                   {showAlbums.length == 0 && <h3>not found albums</h3>}
                 </div>

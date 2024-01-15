@@ -21,7 +21,7 @@ export default function PhotoAdd({ saveNewPhoto, setAddPhotoFlag }) {
         <>
             <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "60vh", right: "40vw", padding: "2vh" }}>
                 <button onClick={() => {
-                    setAddAlbumFlag(false);
+                    setAddPhotoFlag(false);
                 }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
                 <h3>Add Photo</h3>
                 <label htmlFor="title">Title</label><br />

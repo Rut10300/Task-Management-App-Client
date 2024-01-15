@@ -6,14 +6,13 @@ import Photo from '../Photo';
 import NotFound from '../NotFound';
 import LoadingMessage from '../LoadingMessage';
 import ErrorMessege from '../ErrorMessege';
+import '../css/photos.css'
+const numOfPhotosInPage = 5;
 
-let photos = [];
-let startIndexPhotos = 0;
-let requestMorePhotosFlag = true;
 export default function Photos() {
+     const [startIndexPhotos,setStartIndexPhotos] = useState(0);
     const userDetails = JSON.parse(localStorage.getItem("currentUser"))
     const [noMorePhotoFlag, setNoMorePhotoFlag] = useState(false);
-    const numOfPhotosInPage = 5;
     const { albumId } = useParams();
     const [load, setLoad] = useState(true);
     const [wrongRequest, setWrongRequest] = useState(false);
@@ -25,30 +24,24 @@ export default function Photos() {
     async function fatchData() {
         let photosRequest = await getPhotos(id, setLoad, setWrongRequest, `albums/${albumId}/photos?_start=${startIndexPhotos}&_limit=${numOfPhotosInPage}`);
         if (photosRequest.code == 200) {
-            for (let i = 0; i < photosRequest.params.length; i++) {
-                photos.push(photosRequest.params[i]);
+                if (photosRequest.params.length < numOfPhotosInPage)
+                  {setNoMorePhotoFlag(true)}
+                 console.log(showPhotos,startIndexPhotos);
+                setShowPhotos(pre => pre.concat(photosRequest.params));
+                setFoundPhotosFlag(photosRequest.code == 200 ? true : false);
             }
-            if (photosRequest.params.length < numOfPhotosInPage)
-                setNoMorePhotoFlag(true)
-            setShowPhotos(pre => pre.concat(photosRequest.params));
-        }
-        setFoundPhotosFlag(photosRequest.code == 200 ? true : false);
     }
 
     useEffect(() => {
-        if (requestMorePhotosFlag) {
-            fatchData();
-            requestMorePhotosFlag = false;
-        }
-    }, []);
+       fatchData();
+    }, [startIndexPhotos]);
 
     async function showMorePhotos() {
-        startIndexPhotos = startIndexPhotos + 5;
-        fatchData();
+         setStartIndexPhotos(pre=>pre+5);
     }
 
     function updateShowPhotos(id, photoToUpdate) {
-        let photosAfterFilter = photos.map((photo) => {
+        let photosAfterFilter = showPhotos.map((photo) => {
             if (photo.id == id) {
                 let newp = Object.assign(photoToUpdate);
                 return Object.assign(newp);
@@ -57,8 +50,7 @@ export default function Photos() {
                 return Object.assign(photo);
         }
         )
-        photos = [...photosAfterFilter];
-        setShowPhotos(photos)
+        setShowPhotos(photosAfterFilter)
     }
     function deleteFromShowPhotos(id) {
         let indexDeletePhoto = showPhotos.findIndex((p) => p.id == id)
@@ -77,11 +69,10 @@ export default function Photos() {
         let afterPostPhoto = await postInformetion(photoData, setLoad, "photos");
         if (afterPostPhoto.code == 200) {
             setAddPhotoFlag(false);
-            let upDate = Array.from(photos);
+            let upDate = Array.from(showPhotos);
             let newPhoto = Object.assign(afterPostPhoto.params);
             upDate = [...upDate, newPhoto];
-            photos = upDate;
-            setShowPhotos(photos);
+            setShowPhotos(upDate);
         }
     }
 
@@ -98,21 +89,21 @@ export default function Photos() {
                                         <button className="buttonSearchAdd" onClick={() => setAddPhotoFlag(true)} >➕</button>
                                     </div>
                                     {(!foundPhotosFlag) ? <h2>Not Found </h2>
-                                        : showPhotos.map((photo) => {
-                                            return <Photo setLoad={setLoad} key={photo.id} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
-                                        })
+                                        : <div id="allPhotos">{showPhotos.map((photo) => {
+                                            return <Photo setLoad={setLoad} key={photo.id+albumId} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
+                                        })}</div>
                                     }
+
                                     {(foundPhotosFlag && !noMorePhotoFlag) && <button onClick={(e) => { e.preventDefault(); showMorePhotos() }}>more photos</button>}
                                     {showPhotos.length == 0 && <h3>not found Photos</h3>}
                                 </div>
                                 :
                                 <div >
-                                    <LoadingMessage/>
+                                    <LoadingMessage />
                                 </div>}
                         </div > :
                         <div >
-                            <ErrorMessege setWrongRequest={setWrongRequest}/>
-                            
+                            <ErrorMessege setWrongRequest={setWrongRequest} />
                         </div>
                     }
                     {addPhotoFlag && <PhotoAdd setAddPhotoFlag={setAddPhotoFlag} saveNewPhoto={saveNewPhoto} />}

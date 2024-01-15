@@ -18,8 +18,17 @@
     align-items: center;
 }
 
-#moreData {}
-
+.allcomments{
+    z-index: 1;
+    background-color: lightskyblue;
+    position: absolute;
+    border: 2px solid black;
+    height: 75vh;
+    width: 60vw;
+    top: 20vh;
+    left: 10vw;
+    padding: 2vh; 
+}
 .activePostStyle {
     z-index: 1;
     background-color: lightskyblue;
@@ -27,7 +36,7 @@
     border: 2px solid black;
     height: 75vh;
     top: 20vh;
-    right: 38vw;
+    right: 20vw;
     padding: 2vh;
 }
 
