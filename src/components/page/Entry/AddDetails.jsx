@@ -7,7 +7,7 @@ import NotFound from '../../NotFound';
 import './addDetails.css'
 export default function AddDetails() {
     const location = useLocation();
-    let userdata = location.state.userDetails;
+    let userdata = location.state?.userDetails;
 
     const [load, setLoad] = useState(false);
     const [worngRequest, setworngRequest] = useState(false);
