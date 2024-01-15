@@ -109,6 +109,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
 
   return (
     <>
+    
       <div className={activePost ? "activePostStyle" : "postStyle"}>
 
         {activePost &&
@@ -116,10 +117,11 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
         <div id="post">
           <h3 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Post {post.id}</h3>
           {!upDateFlag ? <h4 style={{ fontWeight: !activePost ? "normal" : "bold" }}>Title:<br></br> {post.title}</h4>
-            : <textarea   type="text" name="title" value={contentPostUpdate.title} onChange={(e) => { e.preventDefault(); changeContentPostUpdate(e); }} />}
+            : <textarea  id="titleArea"  type="text" name="title" value={contentPostUpdate.title} onChange={(e) => { e.preventDefault(); changeContentPostUpdate(e); }} />}
           {activePost && <div>
             {!upDateFlag ? <h4 style={{ fontWeight: "bold" }}>Body: <br></br>{post.body}</h4>
-              : <textarea  type="text" name="body" value={contentPostUpdate.body} onChange={(e) => {  e.preventDefault();
+              : <textarea id="bodyArea" type="text" name="body" value={contentPostUpdate.body} onChange={(e) => {
+                e.preventDefault();
                 changeContentPostUpdate(e);
               }} />}
 
@@ -132,7 +134,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
           </div>
           {activePost && seeAllCommentsFlag && loadComments && <LoadingMessage setLoad={setLoadComments} />}
           {activePost && seeAllCommentsFlag && <div>{(!notFoundComments) ? <div>
-            {<div className='allcomments'> {showComments.map((comment) => { return <Comment key={comment.id} deleteFromShowComment={deleteFromShowComment} setShowComments={upDateShowComments} comment={comment} /> })}</div>}
+            {showComments.map((comment) => { return <Comment key={comment.id} deleteFromShowComment={deleteFromShowComment} setShowComments={upDateShowComments} comment={comment} /> })}
           </div> :
             <h4>Not found comments</h4>}
           </div>}
@@ -150,7 +152,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
             {!activePost ? <button onClick={() => {
               navigate(`?post=${post.id}`)
             }}>More aboute me</button> :
-              <button onClick={() =>{ navigate('.');seeAllCommentsFlag(false)}}>Less information</button>}
+              <button onClick={() => navigate('.')}>Less information</button>}
             {addCommentFlag && <CommentAdd saveNewCommentDetails={saveNewCommentDetails} setaddCommentFlag={setaddCommentFlag} />}
           </div>
         </div>

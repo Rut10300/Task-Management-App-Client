@@ -49,9 +49,9 @@ export default function Register() {
             register();
           }}>
             <label htmlFor="userName">User Name</label><br />
-            <input id="userName" type='text' name='userName'value={detailsRegister.userName} required onChange={(e) => handleInputRegisterChange(e)} /><br />
+            <input id="userName" type='text' name='userName' value={detailsRegister.userName} required onChange={(e) => handleInputRegisterChange(e)} /><br />
             <label htmlFor="password">Password</label><br />
-            <input id="password" type='password' name='password'value={detailsRegister.password} autoComplete='2' required onChange={(e) => handleInputRegisterChange(e)} /><br />
+            <input id="password" type='password' name='password' value={detailsRegister.password} autoComplete='2' required onChange={(e) => handleInputRegisterChange(e)} /><br />
             <label htmlFor="password">Verify Password</label><br />
             <input id="verifyPassword" type='password'value={detailsRegister.verifyPassword} name='verifyPassword' autoComplete='2' required onChange={(e) => handleInputRegisterChange(e)} /><br /><br />
             <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}   >Register</button>

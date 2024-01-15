@@ -37,14 +37,14 @@ export default function Photo({ setLoad, photo, updateShowPhotos, deleteFromShow
 
     return (
         <>
-           <div className='photo'> <p style={{ color: "#FBB040"}}>{photo.id}</p>
-            {!upDate ? <p>title: {photo.title}</p> : <textarea type="text" name="title" value={updatePhotoDetails.title} onChange={(e) => handleUpdatePhotoChange(e)} />}
-            <p>url: {photo.url}</p> 
-            <img src={photo.thumbnailUrl} alt="" />
-         <div style={{display:'flex'}}>   {!upDate ? <button className="buttonSearchAdd" onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> :
-                <button onClick={(e) => { updatePhoto(); e.preventDefault(); }}>ok</button>}
-            <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deletePhoto() }}>🗑️</button>
-            </div>
+            <div className='photo'> <p style={{ color: "#FBB040" }}>{photo.id}</p>
+                {!upDate ? <p>title: {photo.title}</p> : <textarea type="text" name="title" value={updatePhotoDetails.title} onChange={(e) => handleUpdatePhotoChange(e)} />}
+                {/* <p>url: {photo.url}</p> */}
+                <img  src={photo.thumbnailUrl} alt=""  />
+                <div style={{ display: 'flex' }}>   {!upDate ? <button className="buttonSearchAdd" onClick={(e) => { setUpDate(true); e.preventDefault(); }} style={{}}>🖋️</button> :
+                    <button onClick={(e) => { updatePhoto(); e.preventDefault(); }}>ok</button>}
+                    <button  className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deletePhoto() }}>🗑️</button>
+                </div>
             </div>
         </>
     )

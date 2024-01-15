@@ -12,8 +12,8 @@ export default function PostAdd({setAddPostFlag,saveNewPost}) {
       e.target.classList.remove("notTouch");
     }
   return (
-    <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "60vh", right: "40vw", padding: "2vh" }}>
-    <button onClick={(e) => {
+<div className="back">
+      <div className='addCompo' >    <button onClick={(e) => {
         e.preventDefault()
       setAddPostFlag(false);
     }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
@@ -24,6 +24,8 @@ export default function PostAdd({setAddPostFlag,saveNewPost}) {
     <input id="body" className='notTouch' name="body" type="text" required onChange={(e) => handleInputChangeAddPost(e)} /><br />
     <button type="sumbit" id='submitButton' className='submit'
       onClick={(e) => { e.preventDefault(); saveNewPost(detailsAddPost); }}>Add</button>
+  </div>
+  
   </div>
   );
 }

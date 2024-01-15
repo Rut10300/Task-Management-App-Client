@@ -1,0 +1,42 @@
+.h1Hello{
+    margin-top:30vh;
+}
+.allLinks {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin-top: 14vh;
+    margin-left: 20%;
+    font-size: 1.5em;
+}
+.todos,.posts, .albums{
+    background-size: cover;
+    background-position: center;
+    border: 3px #FBB040 solid;
+    width: 15vw;
+    height: 30vh;
+    border-radius: 12px;
+}
+.todos:hover,.posts:hover,.albums:hover{
+    filter: brightness(90%);
+    border: 3px #79D3E7 solid;
+    color: #79D3E7;
+}
+.todos {
+    background-image: url('../../img/1.png');
+    margin-right: 20px;
+    color: #FBB040;
+
+}
+
+.posts {
+    background-image: url('../../img/2.png');
+    margin-right: 20px;
+    color: #FBB040;
+
+}
+
+.albums {
+    background-image: url('../../img/3.png');
+    color: #FBB040;
+}

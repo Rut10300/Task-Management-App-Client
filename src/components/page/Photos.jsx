@@ -7,7 +7,7 @@ import NotFound from '../NotFound';
 import LoadingMessage from '../LoadingMessage';
 import ErrorMessege from '../ErrorMessege';
 import '../css/photos.css'
-const numOfPhotosInPage = 5;
+const numOfPhotosInPage = 8;
 
 export default function Photos() {
      const [startIndexPhotos,setStartIndexPhotos] = useState(0);
@@ -37,7 +37,7 @@ export default function Photos() {
     }, [startIndexPhotos]);
 
     async function showMorePhotos() {
-         setStartIndexPhotos(pre=>pre+5);
+         setStartIndexPhotos(pre=>pre+8);
     }
 
     function updateShowPhotos(id, photoToUpdate) {

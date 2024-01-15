@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
-export default function AlbumAdd({ saveNewAlbum,setAddAlbumFlag }) {
+export default function AlbumAdd({ saveNewAlbum, setAddAlbumFlag }) {
 
-  const [title,setTitle]=useState("")
-    
+  const [title, setTitle] = useState("")
+
   return (
     <>
- 
-        <div style={{ zIndex: "1", backgroundColor: "lightskyblue", position: "absolute", border: "2px solid black", top: "60vh", right: "40vw", padding: "2vh" }}>
+
+      <div className="back">
+        <div className='addCompo' >
           <button onClick={() => {
             setAddAlbumFlag(false);
           }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
@@ -22,7 +23,8 @@ export default function AlbumAdd({ saveNewAlbum,setAddAlbumFlag }) {
             }}>Add</button>
 
         </div>
-      
+
+      </div>
     </>
   )
 }
