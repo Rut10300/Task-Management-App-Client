@@ -40,21 +40,21 @@ export default function Posts() {
     }
     )
     posts = [...temp];
-    searchPosts() ;
+    searchPosts();
   }
   function deleteFromPosts(id) {
     let index = posts.findIndex((p) => p.id == id)
     let upDate = [...posts];
     upDate.splice(index, 1);
     posts = [...upDate];
-    let indexShowPosts= showPosts.findIndex((p) => p.id == id)
-    upDate=[...showPosts]
+    let indexShowPosts = showPosts.findIndex((p) => p.id == id)
+    upDate = [...showPosts]
     upDate.splice(indexShowPosts, 1);
     setShowPosts(upDate);
-    
+
   }
 
-  const handleSearchChange = (name,value) => {
+  const handleSearchChange = (name, value) => {
     setSearchParamsPost({
       ...searchParamsPost,
       [name]: value
@@ -95,32 +95,33 @@ export default function Posts() {
   }
   return (
     <>
-     {id == userDetails.id ?
-     <>
-      {!wrongRequest ?
-        <div style={{ opacity: addPostFlag ? "0.2" : "1" }}>
-          {!load ?
-            <div >
-              <h1 >Posts</h1>
-              <div style={{ display: "flex" }}>
-             { (searchParamsPost.id!=""||searchParamsPost.title!="")&& <button onClick={() => { setShowPosts(posts);setSearchParamsPost(searchValuesPost)  }}>Clear filter</button>}
-                <button className="buttonSearchAdd" onClick={() => setAddPostFlag(true)} >➕</button>
-                <button className="buttonSearchAdd" onClick={() => setSearchPostFlag(true)}>🔍</button>
-              </div>
-              {(!foundPostsFlag) ? <h2>Not Found </h2>
-                : <div id="allPosts">{showPosts.map((post1) => {
-                  return <Post setLoad={setLoad} key={post1.id} post={post1} setPosts={setPost} deleteFromPosts={deleteFromPosts} />
-                })}</div>}
-              {showPosts.length == 0 && <h3>not found post</h3>}
-            </div>
-            : <LoadingMessage />}
-            </div > :  <ErrorMessege  setWrongRequest={setWrongRequest}/>  }
-      {addPostFlag && <PostAdd setAddPostFlag={setAddPostFlag} saveNewPost={saveNewPost}/>}
-      {searchPostFlag &&<PostSearch setSearchPostFlag={setSearchPostFlag}searchPosts={searchPosts}handleSearchChange={handleSearchChange}searchParamsPost={searchParamsPost}/> }
-         </> : <NotFound />
+      {id == userDetails.id ?
+        <>
+          {!wrongRequest ?
+            <div style={{ opacity: addPostFlag ? "0.2" : "1" }}>
+              {!load ?
+                <div >
+                  <h1 >Posts</h1>
+                  <div style={{ display: "flex" }}>
+                    {(searchParamsPost.id != "" || searchParamsPost.title != "") && <button onClick={() => { setShowPosts(posts); setSearchParamsPost(searchValuesPost) }}>Clear filter</button>}
+                    <button className="buttonSearchAdd" onClick={() => setAddPostFlag(true)} >➕</button>
+                    <button className="buttonSearchAdd" onClick={() => setSearchPostFlag(true)}>🔍</button>
+                  </div>
+                  {(!foundPostsFlag) ? <h2>Not Found </h2>
+                    : <div id="allPosts">   <h5>all comment</h5>
+                      {showPosts.map((post1) => {
+                        return <Post setLoad={setLoad} key={post1.id} post={post1} setPosts={setPost} deleteFromPosts={deleteFromPosts} />
+                      })}</div>}
+                  {showPosts.length == 0 && <h3>not found post</h3>}
+                </div>
+                : <LoadingMessage />}
+            </div > : <ErrorMessege setWrongRequest={setWrongRequest} />}
+          {addPostFlag && <PostAdd setAddPostFlag={setAddPostFlag} saveNewPost={saveNewPost} />}
+          {searchPostFlag && <PostSearch setSearchPostFlag={setSearchPostFlag} searchPosts={searchPosts} handleSearchChange={handleSearchChange} searchParamsPost={searchParamsPost} />}
+        </> : <NotFound />
       }
     </>
-    
+
   )
 }
 

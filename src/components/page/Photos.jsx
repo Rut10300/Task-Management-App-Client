@@ -90,7 +90,6 @@ export default function Photos() {
                                     </div>
                                     {(!foundPhotosFlag) ? <h2>Not Found </h2>
                                         : <div id="allPhotos" >
-                                            <h5>all comment</h5>
                                         {showPhotos.map((photo) => {
                                             return <Photo setLoad={setLoad} key={photo.id+albumId} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
                                         })}</div>
