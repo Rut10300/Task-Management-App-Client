@@ -4,6 +4,7 @@ import { postUserDetails } from '../../../JS/request';
 import ErrorMessege from '../../ErrorMessege';
 import LoadingMessage from '../../LoadingMessage';
 import NotFound from '../../NotFound';
+import './addDetails.css'
 export default function AddDetails() {
     const location = useLocation();
     let userdata = location.state.userDetails;
@@ -75,23 +76,23 @@ export default function AddDetails() {
             {!worngRequest ?
                 <div>
                     {(!load) ?
-                        <div>
+                        <div style={{height:"200vh"}}>
                             <h1>Add Details</h1>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 saveDetails();
                             }}>
                                 <div id="form" >
-                                    <label htmlFor="name">Name</label><br />
+                                    <label htmlFor="name">* Name</label><br />
                                     <input id="name" className='notTouch' name="name" required onChange={(e) => handleInputChange(e)} type="text" placeholder='Avraham' pattern="[a-zA-Z\u0590-\u05FF\s]+"/><br />
-                                    <label htmlFor="email">Email</label><br />
+                                    <label htmlFor="email">* Email</label><br />
                                     <input id="email" className='notTouch'required name="email" type="email" onChange={(e) => handleInputChange(e)} placeholder='israel@gmail.com' /><br />
                                     <h3>Address</h3>
                                     <label htmlFor="street">Street</label><br />
                                     <input id="street" className='notTouch' name="street" onChange={(e) => handleInputChange(e)} type="text" placeholder='' /><br />
                                     <label htmlFor="suite">Suite</label><br />
                                     <input id="suite" className='notTouch' name="suite" type="text" onChange={(e) => handleInputChange(e)} placeholder='' /><br />
-                                    <label htmlFor="city">City</label><br />
+                                    <label htmlFor="city">* City</label><br />
                                     <input id="city" className='notTouch'required name="city" onChange={(e) => handleInputChange(e)} type="text" placeholder='Jerusalem' /><br />
                                     <label htmlFor="zipcode">Zipcode</label><br />
                                     <input id="zipcode" className='notTouch' name="zipcode" type="text" onChange={(e) => handleInputChange(e)} placeholder='12345-6789' pattern="[0-9]{5,9}" /><br />
@@ -99,7 +100,7 @@ export default function AddDetails() {
                                     <input id="lat" className='notTouch' name="lat" type="text" onChange={(e) => handleInputChange(e)} placeholder='12345-6789' pattern="[0-9]{5,9}" /><br />
                                     <label htmlFor="lng">Lng</label><br />
                                     <input id="lng" className='notTouch' name="lng" type="text" onChange={(e) => handleInputChange(e)} placeholder='12345-6789' pattern="[0-9]{5,9}" /><br />
-                                    <label htmlFor="pnumber">Phon Number</label><br />
+                                    <label htmlFor="pnumber">* Phon Number</label><br />
                                     <input id="phonNumber" className='notTouch' required name="phoneNumber" type="tel" onChange={(e) => handleInputChange(e)} placeholder='0583212345' pattern="[0-9]{10}" /><br />
                                     <h3>Company</h3>
                                     <label htmlFor="companyName">Company Name</label><br />
