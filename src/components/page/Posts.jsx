@@ -9,8 +9,8 @@ import LoadingMessage from '../LoadingMessage';
 import PostSearch from '../Search/PostSearch';
 import '../css/posts.css'
 let posts = [];
-const userDetails = JSON.parse(localStorage.getItem("currentUser"));
 export default function Posts() {
+  const userDetails = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
   const [load, setLoad] = useState(true);
   const [wrongRequest, setWrongRequest] = useState(false);
