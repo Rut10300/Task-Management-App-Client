@@ -7,6 +7,7 @@ import PostAdd from '../Add/PostAdd';
 import ErrorMessege from '../ErrorMessege';
 import LoadingMessage from '../LoadingMessage';
 import PostSearch from '../Search/PostSearch';
+import '../css/posts.css'
 let posts = [];
 const userDetails = JSON.parse(localStorage.getItem("currentUser"));
 export default function Posts() {
@@ -99,17 +100,17 @@ export default function Posts() {
       {!wrongRequest ?
         <div style={{ opacity: addPostFlag ? "0.2" : "1" }}>
           {!load ?
-            <div>
-              <h1>Posts</h1>
+            <div >
+              <h1 >Posts</h1>
               <div style={{ display: "flex" }}>
              { (searchParamsPost.id!=""||searchParamsPost.title!="")&& <button onClick={() => { setShowPosts(posts);setSearchParamsPost(searchValuesPost)  }}>Clear filter</button>}
                 <button className="buttonSearchAdd" onClick={() => setAddPostFlag(true)} >➕</button>
                 <button className="buttonSearchAdd" onClick={() => setSearchPostFlag(true)}>🔍</button>
               </div>
               {(!foundPostsFlag) ? <h2>Not Found </h2>
-                : showPosts.map((post1) => {
+                : <div id="allPosts">{showPosts.map((post1) => {
                   return <Post setLoad={setLoad} key={post1.id} post={post1} setPosts={setPost} deleteFromPosts={deleteFromPosts} />
-                })}
+                })}</div>}
               {showPosts.length == 0 && <h3>not found post</h3>}
             </div>
             : <LoadingMessage />}

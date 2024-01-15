@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useSearchParams, json, Outlet } from "react-router-dom"
 import Todo from '../Todo';
-
 import { postInformetion, getMoreInformetionAbouteUser } from '../../JS/request';
 import NotFound from '../NotFound';
 import ErrorMessege from '../ErrorMessege';
 import LoadingMessage from '../LoadingMessage';
 import TodoAdd from '../Add/TodoAdd';
 import TodoSearch from '../Search/TodoSearch';
+
 let todos = [];
 let optionSort = {
   alphabetic: (sortTodos) => sortTodos.sort((a, b) => a.title.localeCompare(b.title)),
@@ -113,8 +113,12 @@ export default function Todos() {
       let newTodo = Object.assign(afterPostTodo.params);
       upDate = [...upDate, newTodo];
       todos = upDate;
-      let upDateShoeTodos = Array.from(showTodos);
-      upDate = [...upDateShoeTodos, newTodo];
+      let upDateShowTodos = Array.from(showTodos);
+      if ((searchParams.taskId === "" || newTodo.id == searchParams.taskId) &&
+        (searchParams.completed != "yes" && searchParams.completed != "no" || newTodo.completed == (searchParams.completed == "yes" ? true : false)) &&
+        (searchParams.title == "" || searchParams.title == newTodo.title))
+        upDate = [...upDateShowTodos, newTodo];
+      upDate = [...upDateShowTodos];
       typeSort = searchParamLink.get("sort");
       let tempSort = optionSort[typeSort](upDate);
       setShowTodos(tempSort);
@@ -130,18 +134,16 @@ export default function Todos() {
             {!load ?
               <div>
                 <h1>Todos</h1>
-                <div style={{ display: "flex" }}>
+                <div id="buttonLine" >
+                  <button className="buttonSearchAdd" id="addButton" onClick={() => setaddTodoFlag(true)} >➕</button>
+                  <button className="buttonSearchAdd" onClick={() => setsearchTodoFlag(true)}>🔍</button>
                   <select name="sortBy" id="sortBy" onChange={(e) => sortedChange(e)} value={typeSort ?? "serial"}>
                     <option value="serial">Serial</option>
                     <option value="random">Random</option>
                     <option value="alphabetic">Alphabetic</option>
                     <option value="completed">Completed</option>
                   </select>
-                  <div className='option'>
-                    {(searchParams.taskId != "" || searchParams.title != "" || searchParams.completed != "") && <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>}
-                    <button  className="buttonSearchAdd"onClick={() => setaddTodoFlag(true)} >➕</button>
-                    <button className="buttonSearchAdd"onClick={() => setsearchTodoFlag(true)}>🔍</button>
-                  </div>
+                  {(searchParams.taskId != "" || searchParams.title != "" || searchParams.completed != "") && <button onClick={() => { typeSort = searchParamLink.get("sort"); setSearchParams(searchValues); setShowTodos(optionSort[typeSort](todos)) }}>Clear filter</button>}
                 </div>
                 {(!foundTodoFlag) ? <h2>Not Found </h2> : <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>{showTodos.map((todo) => {
                   return <Todo todo={todo} setLoad={setLoad} key={todo.id} setTodos={setTodo} deleteFromTodos={deleteFromTodos} style={{ boxSizing: "border-box" }} />
