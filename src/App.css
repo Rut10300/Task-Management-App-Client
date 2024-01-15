@@ -109,12 +109,45 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.addCompo {
+  z-index: 10;
+  position: absolute;
+  border: 2px solid  black;
+  top: 30vh;
+  right: 40vw;
+  padding: 2vh;
+  background-color: #79D3E7;
+}
+
+.addButton{
+  background-color: white;
+
+}
+
+.searchCompo{
+  z-index: 10;
+  position: absolute;
+  border: 2px solid  black;
+  top: 30vh;
+  right: 40vw;
+  padding: 2vh;
+  background-color: #79D3E7;
+}
+
+.back{
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* רקע אפור שקוף כחצי שקוף */
+    z-index: 1; /* יוצא מעל לעמוד הרגיל */
+}
+
+
+
 @media (prefers-color-scheme: light) {
-  /* :root {
-    color: #213547;
-    background-color: #ffffff;
-   
-  } */
+
 
   a:hover {
     color: #747bff;
