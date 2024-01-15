@@ -89,7 +89,9 @@ export default function Photos() {
                                         <button className="buttonSearchAdd" onClick={() => setAddPhotoFlag(true)} >➕</button>
                                     </div>
                                     {(!foundPhotosFlag) ? <h2>Not Found </h2>
-                                        : <div id="allPhotos">{showPhotos.map((photo) => {
+                                        : <div id="allPhotos" >
+                                            <h5>all comment</h5>
+                                        {showPhotos.map((photo) => {
                                             return <Photo setLoad={setLoad} key={photo.id+albumId} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
                                         })}</div>
                                     }

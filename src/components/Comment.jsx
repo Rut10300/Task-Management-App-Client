@@ -36,17 +36,19 @@ export default function Comment({ comment, setShowComments, deleteFromShowCommen
   }
   return (
     <>
-      <h5>Id: {comment.id}</h5>
-      {!upDate ? <h5>Name: {comment.name}</h5>
-        : <textarea type="text" name="name" value={paramsCommentUpdate.name} onChange={(e) => { e.preventDefault(); changeCommentUpdate(e); }} />}
-      {!upDate ? <h5>Email: {comment.email}</h5>
+      {<div style={{textAlign:'center', justifyContent:"space-between"}}><h7>Id: {comment.id}    </h7>
+
+      {/* {!upDate ? <h7>Name: {comment.name}</h7>
+        : <textarea type="text" name="name" value={paramsCommentUpdate.name} onChange={(e) => { e.preventDefault(); changeCommentUpdate(e); }} />} */}
+      {!upDate ? <h7>Email: {comment.email}</h7>
         : <textarea type="email" name="email" value={paramsCommentUpdate.email} onChange={(e) => { e.preventDefault(); changeCommentUpdate(e); }} />}
-      {!upDate ? <h5>Content: {paramsCommentUpdate.body}</h5>
+        <br></br>
+      {!upDate ? <h7>Content: {paramsCommentUpdate.body}</h7>
         : <textarea type="text" name="body" value={paramsCommentUpdate.body} onChange={(e) => { e.preventDefault(); changeCommentUpdate(e); }} />}
       {comment.email == currentUserEmail && <div>{!upDate ? <button className="buttonSearchAdd" onClick={(e) => {
         setUpDate(true); e.preventDefault();
       }} style={{}}>🖋️</button> : <button onClick={() => updateComment()}>ok</button>}
-        <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deleteCommentFunc() }}>🗑️</button></div>}
+        <button className="buttonSearchAdd" onClick={(e) => { e.preventDefault(); deleteCommentFunc() }}>🗑️</button></div>}</div>}
     </>
   )
 }
