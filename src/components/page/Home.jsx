@@ -9,9 +9,9 @@ export default function Home() {
 
   return (
     <>
-      {id == userDetails.id ?
+      {id == userDetails?.id ?
         <>
-        <h1 className='h1Hello'>Hello {userDetails.username} 😘 </h1>
+          <h1 className='h1Hello'>Hello {userDetails.username} </h1>
           <div className="allLinks">
 
             <Link to={`todos`}><div className="todos">Todos</div></Link>

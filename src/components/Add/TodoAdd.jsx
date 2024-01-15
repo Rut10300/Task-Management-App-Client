@@ -24,7 +24,7 @@ export default function TodoAdd({ setaddTodoFlag, saveNewTodo }) {
         <button onClick={() => { setaddTodoFlag(false); }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
         <h3 className='addTitle'>Add Todo </h3>
         <label htmlFor="title">Title</label><br />
-        <input id="title" className='notTouch' value={detailsAddTodo.title} name="title" type="text" required onChange={(e) => handleInputChangeAddTodo(e)} /><br />
+        <input id="title" className='notTouch' value={detailsAddTodo.title} name="title" type="text" onChange={(e) => handleInputChangeAddTodo(e)} /><br />
         <label htmlFor="completed">Completed</label><br />
         <input type="checkbox" checked={detailsAddTodo.completed} name="completed" value="completed" onChange={(e) => handleInputChangeAddTodo(e)} /><br />
         <button type="sumbit" id='submitButton' className="addButton"

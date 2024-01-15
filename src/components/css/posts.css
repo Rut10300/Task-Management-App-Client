@@ -33,12 +33,22 @@
     background-color: #79D3E7;
     position: absolute;
     border: 2px solid black;
-    height: 120vh;
+    height: 100vh;
     top: 10vh;
     right: 38vw;
     padding: 2vh;
 }
 
+.noCommentsStyle{
+    z-index: 1;
+    background-color: #79D3E7;
+    position: absolute;
+    border: 2px solid black;
+    height: 60vh;
+    top: 20vh;
+    right: 38vw;
+    padding: 2vh;
+}
 .postStyle {
     border-color: aliceblue;
 }

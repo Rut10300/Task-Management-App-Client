@@ -13,7 +13,8 @@ export default function LogIn() {
       ...detailsLogIn,
       [name]: value
     })
-    e.target.classList.remove("notTouch");
+    if (e.target.value != "")
+      e.target.classList.remove("notTouch");
   }
 
   async function logInUser() {
@@ -34,20 +35,23 @@ export default function LogIn() {
   return (
     <>
       {!worngRequest ?
-        <div style={{ height: "90vh" }}>
+        <div style={{ height: "90vh", marginTop: "30vh" }}>
 
           <div>
             <h2>Log In</h2>
             <form onSubmit={(e) => { e.preventDefault(); logInUser(); }}>
               <label htmlFor="userName">User Name</label><br />
-              <input id="userName" type='text' value={detailsLogIn.userName} name='userName' required onChange={(e) => handleLogInInputChange(e)} /><br />
+              <input id="userName" type='text' className='notTouch' value={detailsLogIn.userName} name='userName' pattern="[a-zA-Z\u0590-\u05FF\s]+"  onChange={(e) => handleLogInInputChange(e)} /><br />
               <label htmlFor="password">Password</label><br />
-              <input id="password" type='password' value={detailsLogIn.password}name='password' autoComplete='2' required onChange={(e) => handleLogInInputChange(e)} /><br /><br />
-              <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}>Log In</button>
+              <input id="password" type='password' className='notTouch' value={detailsLogIn.password} name='password' autoComplete='2' required onChange={(e) => handleLogInInputChange(e)} /><br /><br />
+              <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}>Log In</button><br /><br />
             </form>
-            <Link to="/register">
-              Register
-            </Link>
+            <div id="divbut">
+              <h4>Dont have an account?</h4>
+              <Link id="linkReg" to="/register">
+                Register
+              </Link>
+            </div>
           </div>
         </div> : <ErrorMessege setworngRequest={setworngRequest} />
       }

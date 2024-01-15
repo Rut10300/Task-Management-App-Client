@@ -37,15 +37,12 @@ export async function postUserDetails(user, setLoad, setworngRequest) {
             setworngRequest(true);
             throw new Error("Network response was not ok");
         }
-        console.log(response);
         const promiseData = await response.json();
-        console.log(promiseData);
         setLoad(false);
         return { code: 200, message: "ok", params: promiseData };
     }
     catch (error) {
         setLoad(false);
-        console.log();
         return { code: 100, message: error, params: null };
     }
 }
@@ -84,7 +81,6 @@ export async function putInformetion(id, informetion, setLoad, typeInformetion) 
                 'Content-type': 'application/json'
             },
         });
-        console.log(response);
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
@@ -136,7 +132,6 @@ export async function postInformetion(informetion, setLoad, typeInformetion) {
     }
     catch (error) {
         setLoad ?? setLoad(false);
-        console.log();
         return { code: 100, message: error, params: null };
     }
 }
@@ -165,7 +160,6 @@ export async function getCommentsFromServer(id, setLoad) {
 }
 
 export async function getPhotos(id, setLoad, setworngRequest, typeInformetion) {
-    console.log(typeInformetion);
     try {
         setLoad(true);
         const response = await fetch(`http://localhost:3000/${typeInformetion}`);

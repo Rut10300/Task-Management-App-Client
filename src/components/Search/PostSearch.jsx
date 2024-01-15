@@ -9,7 +9,7 @@ export default function PostSearch({ setSearchPostFlag, searchPosts, handleSearc
         <label htmlFor="id">Post Id</label><br />
         <input id="id" className='notTouch' name="id" value={searchParamsPost.id} onChange={(e) => { e.preventDefault(); handleSearchChange(e.target.name, e.target.value) }} type="number" placeholder='12' min="1" /><br />
         <label htmlFor="title">Title</label><br />
-        <input id="title" className='notTouch' name="title" value={searchParamsPost.title} type="text" required onChange={(e) => { e.preventDefault(); handleSearchChange(e.target.name, e.target.value) }} /><br />
+        <input id="title" className='notTouch' name="title" value={searchParamsPost.title} type="text" onChange={(e) => { e.preventDefault(); handleSearchChange(e.target.name, e.target.value) }} /><br />
         <button type="sumbit" id='submitButton' className='submit'
           onClick={(e) => { e.preventDefault(); searchPosts(); }}>search</button>
       </div>

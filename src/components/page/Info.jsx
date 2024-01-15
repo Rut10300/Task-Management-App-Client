@@ -3,12 +3,12 @@ import { useParams, Outlet } from "react-router-dom"
 import NotFound from '../NotFound';
 
 export default function Info() {
-  
+
   let userData = JSON.parse(localStorage.getItem("currentUser"));
   const { id } = useParams();
   return (
     <>
-      {id == userData.id ?
+      {id == userData?.id ?
         <>
           <div>
             <h2>Details of {userData.username}</h2>
@@ -23,7 +23,6 @@ export default function Info() {
               <h4>geo - lat:{userData.address?.geo?.lat ?? " "} lng {userData.address?.geo?.lng ?? " "}</h4>
             </div>
             <h3>phone: {userData?.phone ?? " "}</h3>
-            <h3>website: {userData?.website ?? " "}</h3>
             <div>
               <h3>company - </h3>
               <h4>name: {userData?.company?.name ?? " "}</h4>

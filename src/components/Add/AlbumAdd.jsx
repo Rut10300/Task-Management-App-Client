@@ -14,7 +14,7 @@ export default function AlbumAdd({ saveNewAlbum, setAddAlbumFlag }) {
           }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
           <h3>Add Album</h3>
           <label htmlFor="title">Title</label><br />
-          <input id="title" className='notTouch' name="title" type="text" required onChange={(e) => setTitle(e.target.value)} /><br />
+          <input id="title" className='notTouch' name="title" type="text" onChange={(e) => setTitle(e.target.value)} /><br />
           <button type="sumbit" id='submitButton' className='submit'
             onClick={(e) => {
               e.preventDefault();

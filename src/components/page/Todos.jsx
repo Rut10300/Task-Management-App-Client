@@ -32,7 +32,6 @@ export default function Todos() {
     navigate(`?sort=${e.target.value}`);
     let temp = optionSort[e.target.value](showTodos);
     setShowTodos(temp);
-
   }
 
   useEffect(() => {
@@ -43,15 +42,12 @@ export default function Todos() {
       typeSort = searchParamLink.get("sort");
       navigate(`?sort=${typeSort ?? "serial"}`);
       setShowTodos(optionSort[typeSort ?? "serial"](todos))
-
     }
     fatchData();
   }, [wrongRequest]);
 
-
   function setTodo(id, todoToUpdate) {
     typeSort = searchParamLink.get("sort");
-
     let temp = todos.map((todo) => {
       if (todo.id == id) {
         let newt = Object.assign(todoToUpdate);
@@ -62,8 +58,8 @@ export default function Todos() {
     })
     todos = [...temp];
     searchTodos();
-
   }
+
   function deleteFromTodos(id) {
     let indexTosos = todos.findIndex((t) => t.id == id)
     let upDate = [...todos];
@@ -73,7 +69,6 @@ export default function Todos() {
     let upDateshowTodos = [...showTodos];
     upDateshowTodos.splice(indexShowTosos, 1);
     setShowTodos([...upDateshowTodos]);
-
   }
 
   const searchValues = {
@@ -96,11 +91,9 @@ export default function Todos() {
         (searchParams.title == "" || searchParams.title == t.title))
     })
     setShowTodos(optionSort[typeSort](tempSearch));
-
   }
 
   async function saveNewTodo(detailsAddTodo) {
-
     let todoData = {
       userId: id,
       title: detailsAddTodo.title,
@@ -122,13 +115,12 @@ export default function Todos() {
       typeSort = searchParamLink.get("sort");
       let tempSort = optionSort[typeSort](upDate);
       setShowTodos(tempSort);
-
     }
   }
 
   return (
     <>
-      {id == userDetails.id ?
+      {id == userDetails?.id ?
         <>  {!wrongRequest ?
           <div style={{ opacity: addTodoFlag ? "0.2" : "1" }}>
             {!load ?

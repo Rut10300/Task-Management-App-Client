@@ -74,21 +74,21 @@ export default function Albums() {
 
   return (
     <>
-      {id == userDetails.id ?
+      {id == userDetails?.id ?
         <>
           {!wrongRequest ?
             <div style={{ opacity: addAlbumFlag ? "0.2" : "1" }}>
               {!load ?
                 <div>
-                  <h1 style={{color:"#FBB040",fontSize:"35px"}}>Albums</h1>
+                  <h1 style={{ color: "#FBB040", fontSize: "35px" }}>Albums</h1>
                   <div id="lineButtons" style={{ display: "flex" }}>
                     <button className="buttonSearchAdd" onClick={() => setAddAlbumFlag(true)} >➕</button>
-                    <button className="buttonSearchAdd"onClick={() => setSearchAlbumsFlag(true)}>🔍</button>
+                    <button className="buttonSearchAdd" onClick={() => setSearchAlbumsFlag(true)}>🔍</button>
                     {(searchParamsAlbum.id != "" || searchParamsAlbum.title != "") && <button onClick={() => { setShowAlbums(albums); setSearchParamsAlbum(valuesSearchAlbum) }}>Clear filter</button>}
                   </div>
                   {(!foundAlbumsFlag) ? <h2>Not Found </h2>
-                    :<div id="allAlbums" >{ showAlbums.map((album) => {
-                      return <Link id="link" to={`${album.id}/photos`}><Album setLoad={setLoad} key={album.id*Math.random()} album={album} /></Link>
+                    : <div id="allAlbums" >{showAlbums.map((album) => {
+                      return <Link id="link" to={`${album.id}/photos`}><Album setLoad={setLoad} key={album.id * Math.random()} album={album} /></Link>
                     })}</div>}
                   {showAlbums.length == 0 && <h3>not found albums</h3>}
                 </div>

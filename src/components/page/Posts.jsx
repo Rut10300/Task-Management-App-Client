@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, useSearchParams } from "react-router-dom"
 import { getMoreInformetionAbouteUser, postInformetion } from '../../JS/request';
 import Post from '../Post';
 import NotFound from '../NotFound'
@@ -12,9 +12,12 @@ let posts = [];
 export default function Posts() {
   const userDetails = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
+  const [activePost, setActivePost] = useSearchParams();
+
   const [load, setLoad] = useState(true);
   const [wrongRequest, setWrongRequest] = useState(false);
   const { id } = useParams();
+  let selectedPost = activePost.get("post");
   const [searchPostFlag, setSearchPostFlag] = useState(false);
   const [addPostFlag, setAddPostFlag] = useState(false);
   const [foundPostsFlag, setFoundPostsFlag] = useState(false);
@@ -95,12 +98,12 @@ export default function Posts() {
   }
   return (
     <>
-      {id == userDetails.id ?
+      {id == userDetails?.id ?
         <>
           {!wrongRequest ?
-            <div style={{ opacity: addPostFlag ? "0.2" : "1" }}>
+            <div >
               {!load ?
-                <div >
+                <div className={selectedPost != null && "back"}>
                   <h1 >Posts</h1>
                   <div style={{ display: "flex" }}>
                     {(searchParamsPost.id != "" || searchParamsPost.title != "") && <button onClick={() => { setShowPosts(posts); setSearchParamsPost(searchValuesPost) }}>Clear filter</button>}
@@ -108,7 +111,7 @@ export default function Posts() {
                     <button className="buttonSearchAdd" onClick={() => setSearchPostFlag(true)}>🔍</button>
                   </div>
                   {(!foundPostsFlag) ? <h2>Not Found </h2>
-                    : <div id="allPosts">  
+                    : <div id="allPosts">
                       {showPosts.map((post1) => {
                         return <Post setLoad={setLoad} key={post1.id} post={post1} setPosts={setPost} deleteFromPosts={deleteFromPosts} />
                       })}</div>}

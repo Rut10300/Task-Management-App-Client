@@ -10,7 +10,7 @@ import '../css/photos.css'
 const numOfPhotosInPage = 8;
 
 export default function Photos() {
-     const [startIndexPhotos,setStartIndexPhotos] = useState(0);
+    const [startIndexPhotos, setStartIndexPhotos] = useState(0);
     const userDetails = JSON.parse(localStorage.getItem("currentUser"))
     const [noMorePhotoFlag, setNoMorePhotoFlag] = useState(false);
     const { albumId } = useParams();
@@ -24,21 +24,20 @@ export default function Photos() {
     async function fatchData() {
         let photosRequest = await getPhotos(id, setLoad, setWrongRequest, `albums/${albumId}/photos?_start=${startIndexPhotos}&_limit=${numOfPhotosInPage}`);
         if (photosRequest.code == 200) {
-                if (photosRequest.params.length < numOfPhotosInPage)
-                  {setNoMorePhotoFlag(true)}
-                 console.log(showPhotos,startIndexPhotos);
-                setShowPhotos(pre => pre.concat(photosRequest.params));
-                setFoundPhotosFlag(photosRequest.code == 200 ? true : false);
-            }
+            if (photosRequest.params.length < numOfPhotosInPage) { setNoMorePhotoFlag(true) }
+            console.log(showPhotos, startIndexPhotos);
+            setShowPhotos(pre => pre.concat(photosRequest.params));
+            setFoundPhotosFlag(photosRequest.code == 200 ? true : false);
+        }
     }
 
     useEffect(() => {
-       fatchData();
+        fatchData();
     }, [startIndexPhotos]);
-    
+
 
     async function showMorePhotos() {
-         setStartIndexPhotos(pre=>pre+8);
+        setStartIndexPhotos(pre => pre + 8);
     }
 
     function updateShowPhotos(id, photoToUpdate) {
@@ -79,7 +78,7 @@ export default function Photos() {
 
     return (
         <>
-            {id == userDetails.id ?
+            {id == userDetails?.id ?
                 <>
                     {!wrongRequest ?
                         <div style={{ opacity: addPhotoFlag ? "0.2" : "1" }}>
@@ -91,9 +90,9 @@ export default function Photos() {
                                     </div>
                                     {(!foundPhotosFlag) ? <h2>Not Found </h2>
                                         : <div id="allPhotos" >
-                                        {showPhotos.map((photo) => {
-                                            return <Photo setLoad={setLoad} key={photo.id+albumId} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
-                                        })}</div>
+                                            {showPhotos.map((photo) => {
+                                                return <Photo setLoad={setLoad} key={photo.id + albumId} photo={photo} updateShowPhotos={updateShowPhotos} deleteFromShowPhotos={deleteFromShowPhotos} />
+                                            })}</div>
                                     }
 
                                     {(foundPhotosFlag && !noMorePhotoFlag) && <button onClick={(e) => { e.preventDefault(); showMorePhotos() }}>more photos</button>}

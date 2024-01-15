@@ -12,7 +12,10 @@
     font-weight: bold;
   }
   
-  
+  .addDetails{
+    display: flex;
+
+  }
   
   #form button {
     background-color: rgb(67, 148, 162);

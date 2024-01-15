@@ -26,7 +26,7 @@
   border: 2px solid #1a1a1a;
 }
 
-input:invalid {
+.addDetails input:invalid {
   border: 2px solid rgb(255, 123, 113);
 }
 
@@ -133,13 +133,13 @@ button:focus-visible {
   width: 50vw;
   height: 60vh;
   z-index: 6;
-  background-image: url('/src/img/404.png');
+  background-image: url('/src/img/nm.png');
 }
 #loading{
-  width: 20vw;
-  height: 30vh;
+  width: 4vw;
+  height: 4vh;
   z-index: 6;
-  background-image: url('/src/img/load.gif');
+  background-image: url('/src/img/ncfd.gif');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -181,4 +181,18 @@ button:focus-visible {
 .allco{
   max-height: 250px;
 overflow-y: auto;
+}
+
+#linkReg{
+  color:#FBB040;
+  font-size: 20px;
+}
+
+#linkSign{
+  color:#FBB040;
+  font-size: 20px;
+}
+
+#divRegister{
+  margin-top: 30vh;
 }

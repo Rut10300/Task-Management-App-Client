@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {  Link, useNavigate, Outlet } from "react-router-dom"
+import { Link, useNavigate, Outlet } from "react-router-dom"
 import { getUserDetails } from '../../../JS/request';
 import ErrorMessege from '../../ErrorMessege';
 export default function Register() {
@@ -20,7 +20,7 @@ export default function Register() {
       alert("Passwords don't match");
     }
     else {
-      let userDetails = await getUserDetails(detailsRegister.userName,detailsRegister.password, setworngRequest);
+      let userDetails = await getUserDetails(detailsRegister.userName, detailsRegister.password, setworngRequest);
       if (userDetails.code != 100) {
         if (userDetails.code == 304) {
           let newUserDetails = {
@@ -29,8 +29,7 @@ export default function Register() {
           };
           navigate(`/register/addDetails`, { state: { userDetails: newUserDetails } });
         }
-        else
-        {
+        else {
           alert("wrong username or password");
           setDetailsRegister({ userName: '', password: '', verifyPassword: '' })
         }
@@ -41,8 +40,8 @@ export default function Register() {
   return (
     <>
       {!worngRequest ?
-      
-        <div>
+
+        <div id="divRegister">
           <h2>Register: </h2>
           <form onSubmit={(e) => {
             e.preventDefault();
@@ -53,13 +52,14 @@ export default function Register() {
             <label htmlFor="password">Password</label><br />
             <input id="password" type='password' name='password' value={detailsRegister.password} autoComplete='2' required onChange={(e) => handleInputRegisterChange(e)} /><br />
             <label htmlFor="password">Verify Password</label><br />
-            <input id="verifyPassword" type='password'value={detailsRegister.verifyPassword} name='verifyPassword' autoComplete='2' required onChange={(e) => handleInputRegisterChange(e)} /><br /><br />
+            <input id="verifyPassword" type='password' value={detailsRegister.verifyPassword} name='verifyPassword' autoComplete='2' required onChange={(e) => handleInputRegisterChange(e)} /><br /><br />
             <button type="submit" style={{ backgroundColor: "rgb(67, 148, 162)", color: 'white' }}   >Register</button>
           </form>
-          <Link to="/login">Log in</Link>
+          <h4>Already have an acount?</h4>
+          <Link id="linkSign" to="/login">Log in</Link>
           <Outlet></Outlet>
-        </div>: 
-       <ErrorMessege/>
+        </div> :
+        <ErrorMessege />
       }
     </>
   )

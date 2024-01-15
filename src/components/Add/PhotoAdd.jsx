@@ -26,11 +26,11 @@ export default function PhotoAdd({ saveNewPhoto, setAddPhotoFlag }) {
                     }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
                     <h3>Add Photo</h3>
                     <label htmlFor="title">Title</label><br />
-                    <input id="title" className='notTouch' name="title" type="text" required onChange={(e) => handleInputChange(e)} /><br />
+                    <input id="title" className='notTouch' name="title" type="text" onChange={(e) => handleInputChange(e)} /><br />
                     <label htmlFor="url">Url</label><br />
-                    <input id="url" className='notTouch' name="url" type="text" required onChange={(e) => handleInputChange(e)} /><br />
+                    <input id="url" className='notTouch' name="url" type="text" onChange={(e) => handleInputChange(e)} /><br />
                     <label htmlFor="thumbnailUrl">Thumbnail Url</label><br />
-                    <input id="thumbnailUrl" className='notTouch' name="thumbnailUrl" type="text" required onChange={(e) => handleInputChange(e)} /><br />
+                    <input id="thumbnailUrl" className='notTouch' name="thumbnailUrl" type="text" onChange={(e) => handleInputChange(e)} /><br />
                     <button type="sumbit" id='submitButton' className='submit'
                         onClick={(e) => {
                             e.preventDefault();
