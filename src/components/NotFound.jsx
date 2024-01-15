@@ -5,7 +5,8 @@ export default function NotFound() {
  
   return (
     <>
-    <div id="backimage404">
+    <div style={{width:"60vw",height:"50vh", margin:"auto"}}id="backimage404">
+      <h1>not found</h1>
     </div>
 
     </>

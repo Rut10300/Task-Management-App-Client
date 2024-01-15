@@ -129,7 +129,22 @@ button:focus-visible {
     background-color: rgba(0, 0, 0, 0.4); /* רקע אפור שקוף כחצי שקוף */
     z-index: 1; /* יוצא מעל לעמוד הרגיל */
 }
-
+#backimage404{
+  width: 50vw;
+  height: 60vh;
+  z-index: 6;
+  background-image: url('/src/img/404.png');
+}
+#loading{
+  width: 20vw;
+  height: 30vh;
+  z-index: 6;
+  background-image: url('/src/img/load.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
 
 
 @media (prefers-color-scheme: light) {

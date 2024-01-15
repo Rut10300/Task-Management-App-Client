@@ -1,7 +1,7 @@
 #form {
     margin: 0 auto;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #c5ecf7;
     border-radius: 8px;
     height: 180vh;
   }
@@ -16,6 +16,7 @@
   
   #form button {
     background-color: rgb(67, 148, 162);
+  
     color: white;
     padding: 10px 20px;
     border: none;

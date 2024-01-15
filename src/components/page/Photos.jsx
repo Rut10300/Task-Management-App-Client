@@ -35,6 +35,7 @@ export default function Photos() {
     useEffect(() => {
        fatchData();
     }, [startIndexPhotos]);
+    
 
     async function showMorePhotos() {
          setStartIndexPhotos(pre=>pre+8);

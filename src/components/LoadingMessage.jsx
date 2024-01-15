@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function LoadingMessage() {
     return (
-        <div >
-            <img src="/img/load.gif" alt="" />
+        <div style={{width:"50vw",height:"50vh", position:'absolute',right:"20vw", top:"20vh"}}id="loading">
+           
         </div>
     );
 }

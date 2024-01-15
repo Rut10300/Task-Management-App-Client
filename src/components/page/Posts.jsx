@@ -108,7 +108,7 @@ export default function Posts() {
                     <button className="buttonSearchAdd" onClick={() => setSearchPostFlag(true)}>🔍</button>
                   </div>
                   {(!foundPostsFlag) ? <h2>Not Found </h2>
-                    : <div id="allPosts">   <h5>all comment</h5>
+                    : <div id="allPosts">  
                       {showPosts.map((post1) => {
                         return <Post setLoad={setLoad} key={post1.id} post={post1} setPosts={setPost} deleteFromPosts={deleteFromPosts} />
                       })}</div>}

@@ -49,31 +49,7 @@ export async function postUserDetails(user, setLoad, setworngRequest) {
         return { code: 100, message: error, params: null };
     }
 }
-// export async function putUserDetails(user) {
 
-//     try {
-//         setLoad(true);
-//         const response = await fetch(`http://localhost:3000/users/${id}`, {
-//             method: "PUT",
-//             body: JSON.stringify(user),
-//             headers: {
-//                 'Content-type': 'application/json'
-//             },
-//         });
-//         console.log(response);
-//         if (!response.ok) {
-//             throw new Error("Network response was not ok");
-//         }
-//         const promiseData = await response.json();
-//         console.log(promiseData);
-//         setLoad(false);
-//         return promiseData;
-//     }
-//     catch (error) {
-//         setLoad(false);
-//         return false;
-//     }
-// }
 
 export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest, typeInformetion) {
     try {
