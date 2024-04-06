@@ -18,6 +18,7 @@ export default function LogIn() {
   }
 
   async function logInUser() {
+    debugger
     let userDetails = await getUserDetails(detailsLogIn.userName, detailsLogIn.password, setworngRequest);
     if (userDetails.code != 100) {
       if (userDetails.code == 304) {

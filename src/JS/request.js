@@ -2,13 +2,19 @@ export async function getUserDetails(userName, password, setworngRequest) {
     try {
 
         console.log(password);
-        const response = await fetch(`http://localhost:3000/users?username=${userName}&&website=${password}`);
+        const response = await fetch(`http://localhost:8080/users/login`,{
+            method: "POST",
+            body: JSON.stringify({ username: userName, password: password }),
+            headers: {
+                'Content-type': 'application/json'
+            },
+        });
         if (!response.ok) {
             setworngRequest(true);
             throw new Error("Network response was not ok");
         }
         const promiseData = await response.json();
-        console.log(response);
+        console.log(promiseData);
         let data = promiseData[0];
 
         console.log(data);
@@ -26,7 +32,7 @@ export async function getUserDetails(userName, password, setworngRequest) {
 export async function postUserDetails(user, setLoad, setworngRequest) {
     try {
         setLoad(true);
-        const response = await fetch(`http://localhost:3000/users`, {
+        const response = await fetch(`http://localhost:8080/users`, {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -52,7 +58,7 @@ export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,
     try {
         //setworngRequest(Math.random()>0.5);
         setLoad(true);
-        const response = await fetch(`http://localhost:3000/users/${id}/${typeInformetion}`);
+        const response = await fetch(`http://localhost:8080/users/${id}/${typeInformetion}`);
         if (!response.ok) {
             setworngRequest(true);
             throw new Error("Network response was not ok");
@@ -74,7 +80,7 @@ export async function getMoreInformetionAbouteUser(id, setLoad, setworngRequest,
 export async function putInformetion(id, informetion, setLoad, typeInformetion) {
     try {
         setLoad != null ?? setLoad(true);
-        const response = await fetch(`http://localhost:3000/${typeInformetion}/${id}`, {
+        const response = await fetch(`http://localhost:8080/${typeInformetion}/${id}`, {
             method: "PUT",
             body: JSON.stringify(informetion),
             headers: {
@@ -96,7 +102,7 @@ export async function putInformetion(id, informetion, setLoad, typeInformetion) 
 
 export async function deleteInformetion(id, typeInformetion) {
     try {
-        const response = await fetch(`http://localhost:3000/${typeInformetion}/${id}`, {
+        const response = await fetch(`http://localhost:8080/${typeInformetion}/${id}`, {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
@@ -116,7 +122,7 @@ export async function deleteInformetion(id, typeInformetion) {
 export async function postInformetion(informetion, setLoad, typeInformetion) {
     try {
         setLoad ?? setLoad(true);
-        const response = await fetch(`http://localhost:3000/${typeInformetion}`, {
+        const response = await fetch(`http://localhost:8080/${typeInformetion}`, {
             method: "POST",
             body: JSON.stringify(informetion),
             headers: {
@@ -139,7 +145,7 @@ export async function postInformetion(informetion, setLoad, typeInformetion) {
 export async function getCommentsFromServer(id, setLoad) {
     try {
         setLoad(true)
-        const response = await fetch(`http://localhost:3000/comments?postId=${id}`);
+        const response = await fetch(`http://localhost:8080/comments_postId=${id}`);
         if (!response.ok) {
             throw new Error("Network response was not ok");
 
@@ -162,7 +168,7 @@ export async function getCommentsFromServer(id, setLoad) {
 export async function getPhotos(id, setLoad, setworngRequest, typeInformetion) {
     try {
         setLoad(true);
-        const response = await fetch(`http://localhost:3000/${typeInformetion}`);
+        const response = await fetch(`http://localhost:8080/${typeInformetion}`);
         if (!response.ok) {
             setworngRequest(true);
             throw new Error("Network response was not ok");
