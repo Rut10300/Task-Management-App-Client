@@ -9,15 +9,17 @@ export async function getUserDetails(userName, password, setworngRequest) {
                 'Content-type': 'application/json'
             },
         });
+        debugger;
         if (!response.ok) {
             setworngRequest(true);
             throw new Error("Network response was not ok");
         }
         const promiseData = await response.json();
-        console.log(promiseData);
-        let data = promiseData[0];
-
-        console.log(data);
+        console.log("client");
+        console.log("promise data "+promiseData);
+        let data = promiseData;
+        debugger;
+        console.log("data " +data);
         if (data == null) {
             return { code: 304, message: "NotFound", params: null };
         }
