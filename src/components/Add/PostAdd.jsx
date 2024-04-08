@@ -13,7 +13,8 @@ export default function PostAdd({ setAddPostFlag, saveNewPost }) {
   }
   return (
     <div className="back">
-      <div className='addCompo' >    <button onClick={(e) => {
+      <div className='addCompo' >    
+      <button onClick={(e) => {
         e.preventDefault()
         setAddPostFlag(false);
       }} style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}>✖️</button>
@@ -25,7 +26,6 @@ export default function PostAdd({ setAddPostFlag, saveNewPost }) {
         <button type="sumbit" id='submitButton' className='submit'
           onClick={(e) => { e.preventDefault(); saveNewPost(detailsAddPost); }}>Add</button>
       </div>
-
     </div>
   );
 }

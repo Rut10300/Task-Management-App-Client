@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useSearchParams, json, Outlet } from "react-router-dom"
 import Todo from '../Todo';
-import { postInformetion, getMoreInformetionAbouteUser } from '../../JS/request';
+import { postInformetion, getMoreInformetionAbouteUser, getInformetionById } from '../../JS/request';
 import NotFound from '../NotFound';
 import ErrorMessege from '../ErrorMessege';
 import LoadingMessage from '../LoadingMessage';
@@ -102,19 +102,21 @@ export default function Todos() {
     let afterPostTodo = await postInformetion(todoData, setLoad, "todos");
     if (afterPostTodo.code == 200) {
       setaddTodoFlag(false);
-      let upDate = Array.from(todos);
+      // let newTodoAdd=await getInformetionById(afterPostTodo.params, setLoad, setworngRequest, "todos") 
+      //   let upDate = Array.from(todos);
+      console.log(afterPostTodo);
       let newTodo = Object.assign(afterPostTodo.params);
-      upDate = [...upDate, newTodo];
-      todos = upDate;
-      let upDateShowTodos = Array.from(showTodos);
+      todos = [...todos, newTodo];
+
+      // let upDateShowTodos = Array.from(showTodos);
       if ((searchParams.taskId === "" || newTodo.id == searchParams.taskId) &&
         (searchParams.completed != "yes" && searchParams.completed != "no" || newTodo.completed == (searchParams.completed == "yes" ? true : false)) &&
         (searchParams.title == "" || searchParams.title == newTodo.title))
-        upDate = [...upDateShowTodos, newTodo];
-      upDate = [...upDateShowTodos];
-      typeSort = searchParamLink.get("sort");
-      let tempSort = optionSort[typeSort](upDate);
-      setShowTodos(tempSort);
+        setShowTodos([...showTodos, newTodo]);
+      // upDate = [...upDateShowTodos];
+      // typeSort = searchParamLink.get("sort");
+      // let tempSort = optionSort[typeSort](upDate);
+      // setShowTodos(tempSort);
     }
   }
 

@@ -24,8 +24,11 @@ export default function Posts() {
   const [showPosts, setShowPosts] = useState([{}, {}]);
   useEffect(() => {
     async function fatchData() {
-      let postsRequest = await getMoreInformetionAbouteUser(id, setLoad, setWrongRequest, "posts")
+      debugger;
+      let postsRequest = await getMoreInformetionAbouteUser(id, setLoad, setWrongRequest, "posts");
+      console.log(postsRequest);
       posts = postsRequest.params;
+      console.log(posts);
       setShowPosts(Object.assign(posts));
       setFoundPostsFlag(postsRequest.code == 200 ? true : false);
     }

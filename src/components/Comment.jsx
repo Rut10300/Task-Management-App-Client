@@ -22,11 +22,14 @@ export default function Comment({ comment, setShowComments, deleteFromShowCommen
     e.target.classList.remove("notTouch");
   }
   async function updateComment() {
+    console.log('i am hear');
+    debugger;
     let afterPutComment = await putInformetion(comment.id, paramsCommentUpdate, null, "comments");
+    debugger;
+    console.log("after put "+afterPutComment);
     if (afterPutComment) {
       setShowComments(comment.id, afterPutComment);
       setUpDate(false);
-
     }
   }
   async function deleteCommentFunc() {

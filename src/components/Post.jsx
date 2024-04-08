@@ -36,7 +36,8 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
 
   async function deletePostFunc() {
     let afterDeleteRequ = await deleteInformetion(post.id, "posts");
-    if (afterDeleteRequ) {
+    debugger;
+    if (afterDeleteRequ.status == 200) {
       deleteFromPosts(post.id);
       let afterGetComments = await getCommentsFromServer(post.id, setLoadComments);
       if (afterGetComments.code == 200) {
@@ -62,8 +63,9 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
   }
   async function getAllComments() {
     let afterGetComments = await getCommentsFromServer(post.id, setLoadComments);
+    debugger;
     if (afterGetComments.code == 200) {
-      setShowComments(Object.assign(afterGetComments.params));
+      setShowComments(Object.assign(afterGetComments.params.data));
     }
     else {
       setNotFoundComments(true);
@@ -82,7 +84,7 @@ export default function Post({ post, setPosts, deleteFromPosts, setLoad }) {
     if (afterPostComment.code == 200) {
       setaddCommentFlag(false);
       let upDate = Array.from(showComments);
-      let newComment = Object.assign(afterPostComment.params);
+      let newComment = Object.assign(afterPostComment.params.data);
       upDate = [...upDate, newComment];
       setShowComments(upDate);
     }
